@@ -1,0 +1,6 @@
+if user
+    h1= 'hello! ' + user.name
+else
+    h1= 'no user'
+form(action='/logout', method='POST')
+    input(type='submit' value='登出')

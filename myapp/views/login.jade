@@ -1,0 +1,11 @@
+head
+  link(rel='stylesheet', href='/stylesheets/login.css')
+body
+  form(action='/login', method='POST')
+    input(id = 'name', name = 'name')
+    input(type = 'password', id = 'password', name = 'password')
+    input(id = 'login' type = 'submit' value = '登录')
+
+
+  script(src='/javascripts/login.js')
+
