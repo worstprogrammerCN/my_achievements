@@ -6,7 +6,7 @@ router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
 
-router.get('/login', function(req, res, next){
+router.get('/profile', function(req, res, next){
   res.render('login');
 });
 

@@ -1,4 +1,5 @@
 var express = require('express');
+var debug = require('debug')('app');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
@@ -15,14 +16,16 @@ var MongoStore = require('connect-mongo')(session);
 
 var index = require('./routes/index');
 var users = require('./routes/users');
+var students = require('./routes/students');
 
 //connect to mongodb
 var dbUrl = 'mongodb://localhost:27017/ma';
 var dbInstance;
 var Users;
 MongoClient.connect(dbUrl).then((db) => {
+  console.log('connect to database done');
   dbInstance = db;
-  console.log(dbInstance);
+  students.initializeDatabase(db);
   Users = db.collection('users');
 })
 
@@ -35,8 +38,6 @@ passport.serializeUser(function(user, done) {
 passport.deserializeUser(function(id, done) {
   console.log('deserializeUser');
   Users.findOne({id : id}, function(err, user){
-    console.log('find the user again');
-    console.log(user);
     done(err, user);
   });
 });
@@ -44,25 +45,18 @@ passport.deserializeUser(function(id, done) {
 //-------------------------------------------
 //prepare passport strategy
 passport.use(new localStrategy({
-    usernameField: 'name',
+    usernameField: 'id',
     passwordField: 'password'
   },
-  function(name, password, done) {
-    console.log('start identifying');
-    Users.findOne({ name: name }, function(err, user) {
-      if (user)
-        console.log(user);
-      else
-        console.log('no user');
+  function(id, password, done) {
+    Users.findOne({ id :  id}, function(err, user) {
       if (err) { 
         console.log(err);
         return done(err); }
       if (!user) {
-        console.log('无此用户');
         return done(null, false, { message: '用户名不存在.' });
       }
       if (user.password != password) {
-        console.log('密码不匹配');
         return done(null, false, { message: '密码不匹配.' });
       }
       return done(null, user);
@@ -78,6 +72,7 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
+
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
@@ -90,7 +85,6 @@ app.use(session({
   secret: 'keyboard cat',
   resave: false,
   saveUninitialized: true,
-  cookie: { secure: true },
   store: new MongoStore({ url: dbUrl })
 }))
 app.use(passport.initialize());
@@ -107,18 +101,17 @@ app.post('/login', function(req, res, next) {
   passport.authenticate('local', function(err, user, info) {
     if (err) { return next(err); }
     if (!user) { 
-      console.log('login fail');
-      return res.redirect('/login'); }
+      return res.redirect('/login'); 
+    }
     req.logIn(user, function(err) {
       if (err) { return next(err); }
-      return res.redirect('/logout');
+      debug(user);
+      return res.redirect('/students/profile');
     });
   })(req, res, next);
 });
 
 app.get('/logout', function(req, res){
-  console.log('in logout');
-  console.log(req.user);
   res.render('logout', {user : req.user});
 })
 
@@ -131,6 +124,7 @@ app.post('/logout', function(req, res){
 //-------------------------------------
 //use router
 app.use('/users', users);
+app.use('/students', students.router);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
