@@ -1,18 +1,36 @@
-User = require('./users.js'); //在_Student处被赋值
+User = require('./users.js');
 
 class Student extends User{
-    // mission
+    // missions
+    // webClass
     // group
     constructor(student){
         super(student);
         this.missions = student.missions;
+        this.webClass = student.webClass;
         this.group = student.group;
     }
     getGroupmates(){
-        return Student.collection
+        return Student.userCollection
         .find({webClass : this.webClass, group : this.group})
-        .toArray()
-        .then((groupMates) => {return groupMates});
+        .toArray();
+    }
+    getMissions(){
+        return Student.missionCollection
+        .find({recipient : this.id})
+        .toArray();
+    }
+    getHomeworks(){
+        var homeworkPromiseArray = this.missions.map((missonName) => {
+            return new Promise((resolve, reject) => {
+                Student.homeworkCollection
+                .findOne({name : missonName})
+                .then((homework) => {
+                    resolve(homework);
+                })
+            })
+        })
+        return Promise.all(homeworkPromiseArray);       
     }
 }
 

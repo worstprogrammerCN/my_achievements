@@ -1,0 +1,20 @@
+extends studentSidebar
+
+block content
+    - if (missions && homeworks)
+      ul
+      - each mission, index in missions
+        li
+          p= mission.name
+          - if (mission.score != null)
+            p#score= mission.score
+          - else
+            p#score= '暂无分数'
+          p= '开始日期 ' + mission.startTime
+          p= '截至日期 ' + mission.deadline
+          p= homeworks[index].description
+          a(href = homeworks[index].link)= homeworks[index].link
+    - else
+      p= 'error! no missions'
+
+    

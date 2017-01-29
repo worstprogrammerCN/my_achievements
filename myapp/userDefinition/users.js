@@ -5,7 +5,6 @@ class User{
     // name
     // password
     // email
-    // webClass
     // identity
 
     constructor(user){
@@ -13,12 +12,13 @@ class User{
         this.name = user.name;
         this.password = user.password;
         this.email = user.email;
-        this.webClass = user.webClass;
         this.identity = user.identity;
     }
     static initializeDatabase(db){
         User.db = db;
-        User.collection = db.collection('users');
+        User.userCollection = db.collection('users');
+        User.missionCollection = db.collection('missions');
+        User.homeworkCollection = db.collection('homeworks');
     }
     static getUserWithoutPassword(tUser){
         var user = JSON.parse(JSON.stringify(tUser));

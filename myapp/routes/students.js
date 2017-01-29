@@ -7,12 +7,29 @@ var Student = require('../userDefinition/students.js');
 function initializeDatabase(db){
     Student.initializeDatabase(db);
 }
+router.use(function(req, res, next){
+  req.student = new Student(req.user);
+  next();
+})
+
+router.get('/index', function(req, res, next){
+  var missionsPromise = req.student.getMissions();
+  var homeworksPromise = req.student.getHomeworks();
+  Promise.all([missionsPromise, homeworksPromise])
+  .then(([missions, homeworks]) => {
+    res.render('studentIndex', {missions : missions,
+                              homeworks : homeworks})
+  }).catch((err) => {
+    console.log(err);
+  })
+});
+
 
 router.get('/profile', function(req, res, next){
-  var student = new Student(req.user);
-  var user = Student.getUserWithoutPassword(req.user);
-  student.getGroupmates().then((groupMates) => {
-    res.render('studentProfile', {user : user, groupMates : groupMates});
+  var studentWithoutPassword = Student.getUserWithoutPassword(req.student);
+  req.student.getGroupmates().then((groupMates) => {
+    res.render('studentProfile', {user : studentWithoutPassword
+                          , groupMates : groupMates});
   }).catch((err) => {
     console.log(err);
   })
