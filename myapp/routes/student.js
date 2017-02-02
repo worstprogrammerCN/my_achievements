@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var debug = require('debug')('student');
-var Student = require('../userDefinition/students.js');
+var Student = require('../userDefinition/student.js');
 
 
 function initializeDatabase(db){

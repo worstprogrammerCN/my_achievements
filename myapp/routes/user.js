@@ -1,6 +1,6 @@
-var express = require('express');
-var bcrypt = require('bcrypt');
-var router = express.Router();
+const express = require('express');
+const bcrypt = require('bcrypt');
+const router = express.Router();
 
 const saltRounds = 10;
 
@@ -57,12 +57,14 @@ function loginStrategy(id, password, done){
 }
 
 function initialize(passport, localStrategy, db){
+  userCollection = db.collection('users');
+
   passport.serializeUser(function(user, done) {
     done(null, user.id);
   });
 
   passport.deserializeUser(function(id, done) {
-    Users.findOne({id : id}, function(err, user){
+    userCollection.findOne({id : id}, function(err, user){
       done(err, user);
     });
   });
