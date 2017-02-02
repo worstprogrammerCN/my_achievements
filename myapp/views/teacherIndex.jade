@@ -1,0 +1,31 @@
+extends teacherSidebar
+
+block content
+  
+  div#makeHomework
+    form()
+      input(name = 'name', placeholder = '名字')
+      input(name = 'description', placeholder = '描述')
+      input(name = 'link', placeholder = '链接')
+      input#makeHomeworkSubmit(type = 'button', value = '制定作业')
+  div#homeworks
+    ul
+      - for(var index in homeworks)
+        li
+          p= '作业名 ' + homeworks[index].name
+          p= '作业描述 ' + homeworks[index].description
+  div#publishHomework
+    form
+      input#missionName(placeholder = '作业名')
+      input#missionStartTime(placeholder = '开始时间')
+      input#missionDeadline(placeholder = '结束时间')
+      
+      p= '教学班级'
+      ul#webClasses
+        - for(var index in webClasses)
+          li(id = webClasses[index].grade + '-' + webClasses[index].number)
+            p= webClasses[index].grade + '级' + webClasses[index].number + '班'
+            input(type='checkbox')
+      input#publishHomeworkSubmit(type = 'button', value = '提交')
+  script(src = 'http://cdn.bootcss.com/jquery/3.1.1/jquery.min.js')
+  script(src = '/javascripts/teacherIndex.js')

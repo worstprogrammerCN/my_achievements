@@ -4,6 +4,9 @@ html
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
-    form(action='/logout', method='POST')
-        input(type='submit' value='登出')
+    div#sidebar
+      a(href='/students/index')= '主页'
+      a(href='/students/profile')= '个人设置'
+      form(action='/logout', method='POST')
+          input(type='submit' value='登出')
     block content

@@ -17,6 +17,7 @@ var MongoStore = require('connect-mongo')(session);
 var index = require('./routes/index');
 var users = require('./routes/users');
 var students = require('./routes/students');
+var teachers = require('./routes/teachers');
 
 //connect to mongodb
 var dbUrl = 'mongodb://localhost:27017/ma';
@@ -25,7 +26,7 @@ var Users;
 MongoClient.connect(dbUrl).then((db) => {
   console.log('connect to database done');
   dbInstance = db;
-  students.initializeDatabase(db);
+  routerInitializeDatabase(db);
   Users = db.collection('users');
 })
 
@@ -105,8 +106,8 @@ app.post('/login', function(req, res, next) {
     }
     req.logIn(user, function(err) {
       if (err) { return next(err); }
-      debug(user);
-      return res.redirect('/students/profile');
+      var indexUrl =  `/${user.identity}s/index`;
+      return res.redirect(indexUrl);
     });
   })(req, res, next);
 });
@@ -125,6 +126,7 @@ app.post('/logout', function(req, res){
 //use router
 app.use('/users', users);
 app.use('/students', students.router);
+app.use('/teachers', teachers.router);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -144,6 +146,11 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
+
+function routerInitializeDatabase(db){
+  students.initializeDatabase(db);
+  teachers.initializeDatabase(db);
+}
 
 
 

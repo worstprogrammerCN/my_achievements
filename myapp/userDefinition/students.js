@@ -22,13 +22,8 @@ class Student extends User{
     }
     getHomeworks(){
         var homeworkPromiseArray = this.missions.map((missonName) => {
-            return new Promise((resolve, reject) => {
-                Student.homeworkCollection
-                .findOne({name : missonName})
-                .then((homework) => {
-                    resolve(homework);
-                })
-            })
+            return Student.homeworkCollection
+                  .findOne({name : missonName});
         })
         return Promise.all(homeworkPromiseArray);       
     }
