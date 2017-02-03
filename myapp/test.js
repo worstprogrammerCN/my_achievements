@@ -6,8 +6,18 @@ var dbUrl = 'mongodb://localhost:27017/ma';
   
 // })
 
-const re = /^a+$/;
-console.log(re.test(c));
+let o = Object.assign({
+  webClass : {
+    grade : '',
+    number : ''
+    }
+  }, {
+    webClass : {
+      grade : '17'
+    }
+  }
+)
+console.log(o)
 
 
 function encryptPassword(plainPassword){ // return a promise with hashed password

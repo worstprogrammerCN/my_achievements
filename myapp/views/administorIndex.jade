@@ -15,10 +15,14 @@ body
         input(name = 'grade' placeholder = 'webClass grade')
         input(name = 'number' placeholder = 'webClass number')
         input(name = 'identity' placeholder = 'identity')
-        button.submitButton 增加用户
+        input.submitButton(type = 'button' value = '增加用户')
     button#deleteUser 删除用户
-    button#addClass 增加班级
+    form#addClass 增加班级
+        input(name = 'grade' placeholder = 'webClass grade')
+        input(name = 'number' placeholder = 'webClass number')
+        input.submitButton(type = 'button' value = '增加班级')
     button#deleteClass 删除班级
     button#assignJob 赋予用户权限
     include includes/cdn
+    script(src = '/javascripts/userValidator.js')
     script(src = '/javascripts/administorIndex.js')

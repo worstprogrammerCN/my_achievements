@@ -1,11 +1,11 @@
-var validator = {
+var userValidator = {
     errors : [],
     id : {
         re : /^\d+$/,
         error : 'id应全为数字组成'
     },
     name : {
-        re : /[x{4e00}-x{9fa5}]+/u,
+        re : /[\u4e00-\u9fa5]+/u,
         error : "名字应为汉字"
     },
     password : {
@@ -18,76 +18,82 @@ var validator = {
     },
     grade : {
         re : /^[0-9]{1,3}$/,
-        error : "年级仅限三位数以内"
     },
     number : {
         re : /^[0-9]{1,2}$/,
-        error : "班级仅限两位数以内"
+    },
+    webClass : {
+        error : "年级仅限三位数以内， 班级仅限两位数以内"
     },
     identity : {
         error : "身份只允许teacher、assistant和student"
     },
-    idValid : (id) => {
+    idValid : function(id){
         return this.id.re.test(id);
     },
-    nameValid : (name) => {
+    nameValid : function(name){
         return this.name.re.test(name);
     },
-    passwordValid : (password) => {
+    passwordValid : function(password){
         return this.password.re.test(password);
     },
-    emailValid : (email) => {
+    emailValid : function(email){
         return this.email.re.test(email);
     },
-    gradeValid : (grade) => {
+    gradeValid : function(grade){
         return this.grade.re.test(grade);
     },
-    numberValid : (number) => {
+    numberValid : function(number){
         return this.number.re.test(number);
     },
-    webClassValid : (webClass) => {
-        return this.gradeValid(webClass.grade)
+    webClassValid : function(webClass){
+        return webClass.grade
+            && webClass.number
+            && this.gradeValid(webClass.grade)
             && this.numberValid(webClass.number);
     },
-    identityValid : (identity) => {
+    identityValid : function(identity){
         return identity == 'teacher'
             || identity == 'assistant'
             || identity == 'student'
     },
-    userValid : (user) => {
+    propertiesValid : function(user){
+        let result = true;
+        for(property in user){
+            let propertyValid = property + 'Valid';
+            if (!this[propertyValid]){ // 无此属性对应的validator时
+                result = false;
+                continue;
+            }
+            else if (!this[propertyValid](user[property])){
+                result = false;
+                this.errors.push(this[property].error);
+            }
+        }
+        return result;
+    },
+    userValid : function(user){
         this.errors = [];
         if (this.identityValid(user.identity)){
-            let relatedValidator = this[user.identity + 'Valid'];
-            return relatedValidator(user);
+            return this[user.identity + 'Valid'](user);
         }
         else{
             this.errors.push(this.identity.error);
             return false;
-        }  
+        }
     },
-    teacherValid : (teacher) => {
+    teacherValid : function(teacher){
         let result = true;
-        Object.assign({
+        teacher = Object.assign({
             id         : '',
             name       : '',
             password   : '',
             email      : '',
         }, teacher);
-        for(property in teacher){
-            let propertyValidator = this[property + 'Validator'];
-            if (!propertyValidator){ // 无此属性对应的validator时
-                result = false;
-                continue;
-            }
-            else if (!propertyValidator(teacher.property)){
-                result = false;
-                this.errors.push(this.property.error);
-            }
-        }
-        return result;
+        return this.propertiesValid(teacher);
     },
-    assistantValid : (assistant) => {
-        Object.assign({
+    assistantValid : function(assistant){
+        assistant = Object.assign({
             id         : '',
             name       : '',
             password   : '',
@@ -97,9 +103,10 @@ var validator = {
                 number : ''
             },
         }, assistant);
+        return this.propertiesValid(assistant);
     },
-    studentValid : (student) => {
-        Object.assign({
+    studentValid : function(student){
+        student = Object.assign({
             id         : '',
             name       : '',
             password   : '',
@@ -109,7 +116,9 @@ var validator = {
                 number : ''
             },
         }, student);
+        return this.propertiesValid(student);
     }
-
-
 }
+
+if (typeof module == 'object')
+    module.export = userValidator;
