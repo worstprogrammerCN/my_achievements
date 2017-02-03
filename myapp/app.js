@@ -17,6 +17,7 @@ var MongoStore = require('connect-mongo')(session);
 var user = require('./routes/user');
 // var student = require('./routes/student');
 // var teacher = require('./routes/teacher');
+var administor = require('./routes/administor');
 
 //connect to mongodb
 var dbUrl = 'mongodb://localhost:27017/ma';
@@ -53,9 +54,10 @@ app.use(passport.session());
 
 //-------------------------------------
 //use router
-app.use('/user', users);
+app.use('/user', user.router);
 // app.use('/student', student.router);
 // app.use('/teacher', teacher.router);
+app.use('/administor', administor.router);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -77,9 +79,10 @@ app.use(function(err, req, res, next) {
 
 
 function routerInitialize(db){
-  student.initializeDatabase(db);
-  teacher.initializeDatabase(db);
+  // student.initializeDatabase(db);
+  // teacher.initializeDatabase(db);
   user.initialize(passport, localStrategy, db);
+  administor.initialize(db);
 }
 
 

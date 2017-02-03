@@ -1,11 +1,12 @@
+
 head
   link(rel='stylesheet', href='/stylesheets/login.css')
 body
-  form(action='/login', method='POST')
+  form#loginPanel
     input(name = 'id')
     input(type = 'password', name = 'password')
-    input(type = 'submit' value = '登录')
+    input#login(type = 'button' value = '登录')
 
-
+  include includes/cdn
   script(src='/javascripts/login.js')
 
