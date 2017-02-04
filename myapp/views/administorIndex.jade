@@ -1,5 +1,5 @@
 - var userRouterUrl = '/user'
-
+- var administorRouterUrl = '/administor'
 head
     link(rel = 'stylesheet' href = '/stylesheets/administorIndex.css')
 
@@ -17,7 +17,12 @@ body
         input(name = 'identity' placeholder = 'identity')
         input.submitButton(type = 'button' value = '增加用户')
     button#deleteUser 删除用户
-    form#addClass 增加班级
+    form#divideGroup
+        input(name = 'grade' placeholder = 'grade')
+        input(name = 'number' placeholder = 'number')
+        input(name = 'maxNumber' placeholder = '每组最多人数')
+        input.submitButton(type = 'button' value = '自动分组')
+    form#addWebClass 增加班级
         input(name = 'grade' placeholder = 'webClass grade')
         input(name = 'number' placeholder = 'webClass number')
         input.submitButton(type = 'button' value = '增加班级')

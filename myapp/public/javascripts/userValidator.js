@@ -106,6 +106,7 @@ var userValidator = {
         return this.propertiesValid(assistant);
     },
     studentValid : function(student){
+        console.log(student);
         student = Object.assign({
             id         : '',
             name       : '',
@@ -121,4 +122,4 @@ var userValidator = {
 }
 
 if (typeof module == 'object')
-    module.export = userValidator;
+    module.exports = userValidator;
