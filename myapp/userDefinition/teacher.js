@@ -1,4 +1,4 @@
-User = require('./users.js');
+User = require('./user.js');
 var debug = require('debug')('teacher')
 class Teacher extends User{
 

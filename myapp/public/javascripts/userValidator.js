@@ -83,41 +83,30 @@ var userValidator = {
         }
     },
     teacherValid : function(teacher){
-        let result = true;
-        teacher = Object.assign({
-            id         : '',
-            name       : '',
-            password   : '',
-            email      : '',
-        }, teacher);
-        return this.propertiesValid(teacher);
+        let mTeacher = {};
+        mTeacher.id = teacher.id || '';
+        mTeacher.name = teacher.name || '';
+        mTeacher.password = teacher.password || '';
+        mTeacher.email = teacher.email || '';
+        return this.propertiesValid(mTeacher);
     },
     assistantValid : function(assistant){
-        assistant = Object.assign({
-            id         : '',
-            name       : '',
-            password   : '',
-            email      : '',
-            webClass   : {
-                grade  : '',
-                number : ''
-            },
-        }, assistant);
-        return this.propertiesValid(assistant);
+        let mAssistant = {};
+        mAssistant.id = assistant.id || '';
+        mAssistant.name = assistant.name || '';
+        mAssistant.password = assistant.password || '';
+        mAssistant.email = assistant.email || '';
+        mAssistant.webClass = assistant.webClass || '';
+        return this.propertiesValid(mAssistant);
     },
     studentValid : function(student){
-        console.log(student);
-        student = Object.assign({
-            id         : '',
-            name       : '',
-            password   : '',
-            email      : '',
-            webClass   : {
-                grade  : '',
-                number : ''
-            },
-        }, student);
-        return this.propertiesValid(student);
+        let mStudent = {};
+        mStudent.id = student.id || '';
+        mStudent.name = student.name || '';
+        mStudent.password = student.password || '';
+        mStudent.email = student.email || '';
+        mStudent.webClass = student.webClass || '';
+        return this.propertiesValid(mStudent);
     }
 }
 

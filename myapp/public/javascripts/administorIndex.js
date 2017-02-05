@@ -11,8 +11,8 @@ $(function(){
             password : $form.find('input[name = "password"]').val(),
             email : $form.find('input[name = "email"]').val(),
             webClass : {
-                grade : $form.find('input[name = "grade"]').val(),
-                number : $form.find('input[name = "number"]').val(),
+                grade : parseInt($form.find('input[name = "grade"]').val()),
+                number : parseInt($form.find('input[name = "number"]').val()),
             },
             identity : $form.find('input[name = "identity"]').val()
         }
@@ -25,6 +25,7 @@ $(function(){
                 data: {user : JSON.stringify(user)},
                 dataType: 'text'
             }).done((result) => {
+                console.log(result);
                 result = JSON.parse(result);
                 if (result.ok)
                     alert('ok');
@@ -38,8 +39,8 @@ $(function(){
     function checkWebClass(){
         let $form = $('#addWebClass');
         let webClass = {
-            grade : $form.find('input[name = "grade"]').val(),
-            number : $form.find('input[name = "number"]').val()
+            grade : parseInt($form.find('input[name = "grade"]').val()),
+            number : parseInt($form.find('input[name = "number"]').val())
         }
         $.post({
             type: "POST",
@@ -60,10 +61,10 @@ $(function(){
         let $form = $('#divideGroup');
         let divideSetting = {
             webClass : {
-                grade : $form.find('input[name = "grade"]').val(),
-                number : $form.find('input[name = "number"]').val(),
+                grade : parseInt($form.find('input[name = "grade"]').val()),
+                number : parseInt($form.find('input[name = "number"]').val()),
             },
-            maxNumber : $form.find('input[name = "maxNumber"]').val()
+            maxNumber : parseInt($form.find('input[name = "maxNumber"]').val())
         }
         $.post({
             type: "POST",

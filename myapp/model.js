@@ -63,11 +63,10 @@ var review = {
 var webClass = {
     grade : 15, //15级
     number : 1, //1班
-    assistantList : ["14331130", "14331131", "14331132"],
-    groups : ["151", "152"]
+    assistantList : ["14331130", "14331131", "14331132"]
 }
 
-var group  = {
+var webGroup  = {
     webClass : {
         grade : 15,
         number : 1

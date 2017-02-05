@@ -1,4 +1,4 @@
-User = require('./users.js');
+User = require('./user.js');
 
 class Assistant extends User{
 
