@@ -1,22 +1,26 @@
 $(function(){
-    var makeHomeworkUrl = '/teachers/addHomework';
-    var publishHomeworkUrl = '/teachers/publishHomework';
+    var teacherRouterUrl = '/teacher'
+    var makeHomeworkUrl = teacherRouterUrl + '/makeHomework';
+    var publishHomeworkUrl = teacherRouterUrl + '/publishHomework';
 
     var makeHomework = function(){
-        var name = $('#makeHomework input[name="name"]').val();
-        var description = $('#makeHomework input[name="description"]').val();
-        var link = $('#makeHomework input[name="link"]').val();
+        var $form = $('#makeHomework');
         var homework = {
-            name : name,
-            description : description,
-            link : link
-        }
-        $.post(makeHomeworkUrl, homework, function(result){
+            name : $form.find('input[name="name"]').val(),
+            description : $form.find('input[name="description"]').val(),
+            link : $form.find('input[name="link"]').val(),
+            startTime : $form.find('input[name="startTime"]').val(),
+            endTime : $form.find('input[name="endTime"]').val(),
+        };
+        $.post(makeHomeworkUrl, {homework : JSON.stringify(homework)})
+        .done(function(result){
             result = JSON.parse(result);
-            if (result.insertSuccess)
-                alert('success');
+            if (result.ok)
+                alert('ok');
             else
                 alert('fail');
+        }).fail(function(error){
+            console.log(error);
         })
     }
 

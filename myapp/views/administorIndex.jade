@@ -26,6 +26,11 @@ body
         input(name = 'grade' placeholder = 'webClass grade')
         input(name = 'number' placeholder = 'webClass number')
         input.submitButton(type = 'button' value = '增加班级')
+    form#distributeReview 分配评论
+        input(name = 'grade' placeholder = 'webClass grade')
+        input(name = 'number' placeholder = 'webClass number')
+        input(name = 'homeworkName' placeholder = 'homework name')
+        input.submitButton(type = 'button' value = '分配评论')
     button#deleteClass 删除班级
     button#assignJob 赋予用户权限
     include includes/cdn

@@ -26,17 +26,18 @@ router.get('/index', function(req, res, next){
   })
 });
 
-router.post('/addHomework', function(req, res, next){
-    var homework = req.body;
-    req.teacher.addHomework(homework).then((result) => {
-        var insertSuccess = result.insertedCount > 0;
+router.post('/makeHomework', function(req, res, next){
+    debug(req.body);
+    var homework = JSON.parse(req.body.homework);
+    req.teacher.makeHomework(homework).then((result) => {
         var result = {
-            insertSuccess : insertSuccess
+            ok : result.insertedCount > 0
         }
         var resultStr = JSON.stringify(result);
         res.end(resultStr);
     }).catch((err) => {
         console.log(err);
+        res.end(JSON.stringify({ok : false}));
     })
 
 })

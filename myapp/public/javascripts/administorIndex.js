@@ -3,6 +3,7 @@ $(function(){
     let addUserUrl = administorRouterUrl + '/addUser';
     let addwebClassUrl = administorRouterUrl + '/addWebClass';
     let divideGroupUrl = administorRouterUrl + '/divideGroup';
+    let distributeSettingUrl = administorRouterUrl + '/distributeReview';
     function checkUser(){
         let $form = $('#addUser');
         var user = {
@@ -81,7 +82,34 @@ $(function(){
             alert('connect fail')
         })   
     }
+
+    function checkDistributeSetting(){
+        $form = $('#distributeReview');
+        var distributeSetting = {
+            webClass : {
+                number : parseInt($form.find('input[name = "number"]').val()),
+                grade : parseInt($form.find('input[name = "grade"]').val())
+            },
+            homeworkName : $form.find('input[name = "homeworkName"]').val()
+        }
+        $.post({
+            type: "POST",
+            url: distributeSettingUrl,
+            data: {distributeSetting : JSON.stringify(distributeSetting)},
+            dataType: 'text'
+        }).done((result) => {
+            result = JSON.parse(result);
+            if (result.ok)
+                alert('ok');
+            else
+                alert('fail');
+        }).fail((error) => {
+            alert('connect fail')
+        })   
+    }
+
     $('#addUser .submitButton').click(checkUser);
     $('#addWebClass .submitButton').click(checkWebClass);
     $('#divideGroup .submitButton').click(divideGroup);
+    $('#distributeReview .submitButton').click(checkDistributeSetting);
 })

@@ -2,16 +2,10 @@ var bcrypt = require('bcryptjs');
 var MongoClient = require('mongodb').MongoClient
 const saltRounds = 10;
 var dbUrl = 'mongodb://localhost:27017/ma';
+var debug = require('debug')('test')
 // MongoClient.connect(dbUrl).then((db) => {
   
 // })
-var user = {
-  webclass : {
-    number : 1
-  },
-  id : 'aa'
-}
-console.log(JSON.parse(JSON.stringify(user)))
 
 // var express = require('express')
 // var multer  = require('multer')
@@ -30,6 +24,7 @@ console.log(JSON.parse(JSON.stringify(user)))
 
 // app.listen(3000);
 
+console.log(Math.ceil(1.01));
 
 function encryptPassword(plainPassword){ // return a promise with hashed password
   return bcrypt.hash(plainPassword, saltRounds);

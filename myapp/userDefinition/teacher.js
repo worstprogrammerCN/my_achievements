@@ -43,18 +43,9 @@ class Teacher extends User{
             }
         })
     }
-    addHomework(homework){
+    makeHomework(homework){
         return Teacher.homeworkCollection
-        .findOne({name : homework.name})
-        .then((existedhomework) => {
-            if (existedhomework == null)
-                return Teacher.homeworkCollection
                       .insertOne(homework);
-            else
-                return {
-                    insertedCount : 0
-                };
-        });
     }
     deleteHomework(homework){
 

@@ -19,6 +19,7 @@ class User{
         User.userCollection = db.collection('user');
         User.homeworkCollection = db.collection('homework');
         User.webClassCollection = db.collection('webClass');
+        User.missionCollection = db.collection('mission');
     }
     static getUserWithoutPassword(tUser){
         var user = JSON.parse(JSON.stringify(tUser));

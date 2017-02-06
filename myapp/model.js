@@ -15,6 +15,7 @@ var mission = {
     recipient : "15331132",
     homeworkName : "maze",
     reviewerList : ["15331133", "100"],
+    revieweeList : ["15331134"],
     score : 99,
     image : "",
     code : "fasefes.zip",

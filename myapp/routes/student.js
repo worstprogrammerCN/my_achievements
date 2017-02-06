@@ -13,15 +13,7 @@ router.use(function(req, res, next){
 })
 
 router.get('/index', function(req, res, next){
-  var missionsPromise = req.student.getMissions();
-  var homeworksPromise = req.student.getHomeworks();
-  Promise.all([missionsPromise, homeworksPromise])
-  .then(([missions, homeworks]) => {
-    res.render('studentIndex', {missions : missions,
-                              homeworks : homeworks})
-  }).catch((err) => {
-    console.log(err);
-  })
+  
 });
 
 
@@ -35,7 +27,17 @@ router.get('/profile', function(req, res, next){
   })
 });
 
+router.post('/homework/:homeworkName/reviewee', function(req, res, next){
 
+})
+
+router.post('/homework/:homeworkName/reviewer', function(req, res, next){
+
+})
+
+router.post('/homework/:homeworkName/detail', function(req, res, next){
+
+})
 module.exports = {
   router : router,
   initializeDatabase : initializeDatabase
