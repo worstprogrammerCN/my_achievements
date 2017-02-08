@@ -69,10 +69,10 @@ router.get('/homework/:homeworkName', function(req, res, next){
       getRevieweeMissions.push(getRevieweeMission);
     }
     let getReviewees = Promise.all(getRevieweeMissions).then((missions) => {
+      missions = missions.filter((mission) => {
+        return mission.code && mission.image;
+      });
       debug(missions);
-      uploadedMissions = missions.filter((mission) => {
-        return 
-      })
       let getReviews = [];
       for(let j = 0; j < missions.length; j++){
         let revieweeId = missions[j].recipient
@@ -91,6 +91,7 @@ router.get('/homework/:homeworkName', function(req, res, next){
           };
           return reviewee;
         });
+        return reviewees;
       })
       return RevieweesToReturn;
     })
@@ -98,10 +99,15 @@ router.get('/homework/:homeworkName', function(req, res, next){
   };
   let reviewerList = req.mission.reviewerList;
   let revieweeList = req.mission.revieweeList;
-  return Promise.all([getReviewerReview(revieweeList)
-                    , getRevieweeReviewAndDownload(reviewerList)])
+  return Promise.all([getReviewerReview(reviewerList)
+                    , getRevieweeReviewAndDownload(revieweeList)])
                   .then(([reviewers, reviewees]) => {
-                    res.end('studentHomework'
+                    debug(reviewers);
+                    debug(reviewees);
+                    reviewers = reviewers.map((reviewer) => {
+                      return {review : reviewer};
+                    })
+                    res.render('studentHomework'
                         , {reviewees : reviewees
                         , reviewers : reviewers});
                   });

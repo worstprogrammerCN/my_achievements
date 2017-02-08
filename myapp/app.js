@@ -83,9 +83,13 @@ function routerInitialize(db){
   teacher.initializeDatabase(db);
   user.initialize(passport, localStrategy, db);
   administor.initialize(db);
+  module.exports.closeDatabase = function(){
+    db.close();
+  }
 }
 
 
 
 
-module.exports = app;
+
+module.exports.app = app;

@@ -10,8 +10,14 @@ block content
         input(type = 'text', name = 'textfield')
         input(type = 'file', name = 'filefield', multiple)
         input(type = 'submit')
-    - each reviewer in reviewer
-        p= reviewer
-    - each reviewee in reviewee
-        p= reviewee
+    - each reviewer in reviewers
+        p= '评论人 ' +reviewer.review.reviewerName
+    p= 'reviewees length : ' + reviewees.length
+    - if (reviewees.lenth > 0)
+        p= reviewees
+        - each reviewee in reviewees
+            p= '已提交作业的同学' + reviewee.review.revieweeName
+    - else
+        p= '暂无同学提交作业'
+
 

@@ -81,13 +81,14 @@ MongoClient.connect(dbUrl).then((db) => {
 // // Done parsing form! 
 
 
-let foo = () => {
-  console.log(aaa);
+function foo1(){
+  function foo2(){
+    console.log('a');
+  }
 }
-for(let i = 0; i < 10; i++){
-  var aaa = 3;
-  foo();
-}
+
+console.log(foo2);
+
 function encryptPassword(plainPassword){ // return a promise with hashed password
   return bcrypt.hash(plainPassword, saltRounds);
 }
