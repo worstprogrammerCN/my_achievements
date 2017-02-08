@@ -1,0 +1,17 @@
+extends studentSideBar
+
+block content
+    - var homeworkRouterUrl = '/homework'
+    - var uploadUrl = studentRouterUrl + homeworkRouterUrl + '/' + homeworkName + '/upload'
+    p= 'homeworkName is ' + homeworkRouterUrl
+    form(method = 'POST'
+       , enctype = 'multipart/form-data'
+       , action = uploadUrl)
+        input(type = 'text', name = 'textfield')
+        input(type = 'file', name = 'filefield', multiple)
+        input(type = 'submit')
+    - each reviewer in reviewer
+        p= reviewer
+    - each reviewee in reviewee
+        p= reviewee
+

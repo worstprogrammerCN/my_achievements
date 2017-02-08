@@ -1,19 +1,17 @@
 extends studentSidebar
 
 block content
-    - if (missions && homeworks)
+    - if (homeworks)
       ul
-      - each mission, index in missions
+      - each homework in homeworks
         li
-          p= mission.name
-          - if (mission.score != null)
-            p#score= mission.score
-          - else
-            p#score= '暂无分数'
-          p= '开始日期 ' + mission.startTime
-          p= '截至日期 ' + mission.deadline
-          p= homeworks[index].description
-          a(href = homeworks[index].link)= homeworks[index].link
+          p= '作业名 ' + homework.name
+          p= '作业状态 ' + homework.status
+          p= '开始日期 ' + homework.startTime
+          p= '截至日期 ' + homework.endTime
+          p= '作业描述 ' + homework.description
+          a(href = homework.link)= homework.link
+          a(href = studentRouterUrl + '/homework/' + homework.name) 作业详情
     - else
       p= 'error! no missions'
 

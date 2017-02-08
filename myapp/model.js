@@ -17,6 +17,7 @@ var mission = {
     reviewerList : ["15331133", "100"],
     revieweeList : ["15331134"],
     score : 99,
+    rank : 1,
     image : "",
     code : "fasefes.zip",
     github : "http://asfdfasd.afsd.com"
@@ -47,11 +48,11 @@ var homework = {
     description : "description of recipe",
     link : "http://www.baidu.com",
     startTime : "2017-01-14",
-    deadline : "2017-02-23",
+    endTime : "2017-02-23",
 }
 
 var review = {
-    homework : "recipe",
+    homeworkName : "recipe",
     reviewerId : "15331133",
     reviewerName : "zxy",
     reviewerIdentity : "assistant",

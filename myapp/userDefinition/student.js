@@ -6,7 +6,6 @@ class Student extends User{
     // group
     constructor(student){
         super(student);
-        this.missions = student.missions;
         this.webClass = student.webClass;
         this.group = student.group;
     }
@@ -15,17 +14,39 @@ class Student extends User{
         .find({webClass : this.webClass, group : this.group})
         .toArray();
     }
-    getMissions(){
-        return Student.missionCollection
-        .find({recipient : this.id})
-        .toArray();
-    }
     getHomeworks(){
-        var homeworkPromiseArray = this.missions.map((missonName) => {
-            return Student.homeworkCollection
-                  .findOne({name : missonName});
+        return Student.homeworkCollection.find().toArray();       
+    }
+    updateCode(homeworkName, fileName){
+        return Student.missionCollection.update({
+          recipient : this.id,
+          homeworkName : homeworkName
+        }, {$set : {
+          code : fileName
+        }})
+    }
+    updateImg(homeworkName, fileName){
+        return Student.missionCollection.update({
+          recipient : this.id,
+          homeworkName : homeworkName
+        }, {$set : {
+          image : fileName
+        }})
+    }
+    getMission(homeworkName){
+        return Student.missionCollection.findOne({
+            'recipient' : this.id,
+            'homeworkName' : homeworkName
         })
-        return Promise.all(homeworkPromiseArray);       
+    }
+    getDownload(homeworkName){
+        
+    }
+    getRevieweesReview(homeworkName){
+
+    }
+    getReviewersReview(homeworkName){
+
     }
 }
 
