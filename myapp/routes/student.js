@@ -165,8 +165,8 @@ router.post('/homework/:homeworkName/upload', function(req, res, next){
     });
     busboy.on('finish', function() {
       console.log('Done parsing form!');
-      res.writeHead(303, { Connection: 'close', Location: '/student/homework/' + homeworkName});
-      res.end();
+      res.writeHead(303, { Connection: 'close'});
+      res.end(JSON.stringify({success : true}));
     });
     req.pipe(busboy);
 })

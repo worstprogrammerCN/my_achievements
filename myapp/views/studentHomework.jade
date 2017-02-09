@@ -9,15 +9,24 @@ block content
        , action = uploadUrl)
         input(type = 'text', name = 'textfield')
         input(type = 'file', name = 'filefield', multiple)
-        input(type = 'submit')
-    - each reviewer in reviewers
-        p= '评论人 ' +reviewer.review.reviewerName
+        input(type = 'button')
+    div#reviewers
+        p= '他人的评论:'
+        - each reviewer in reviewers
+            p= '评论人 ' + reviewer.review.reviewerName
+            if (reviewer.review.comment)
+                p= '内容 ' + reviewer.review.comment
+            else
+                p= '暂未评论'
     p= 'reviewees length : ' + reviewees.length
-    - if (reviewees.lenth > 0)
-        p= reviewees
-        - each reviewee in reviewees
-            p= '已提交作业的同学' + reviewee.review.revieweeName
-    - else
-        p= '暂无同学提交作业'
+    div#reviewees
+        - if (reviewees.lenth > 0)
+            p= reviewees
+            - each reviewee in reviewees
+                p= '已提交作业的同学' + reviewee.review.revieweeName
+        - else
+            p= '暂无同学提交作业'
+    include cdn
+    script(src = 'javascripts/studentHomework.js')
 
 
