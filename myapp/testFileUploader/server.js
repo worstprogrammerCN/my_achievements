@@ -21,7 +21,7 @@ app.post('*', function(req, res, next){
     let postValue;
     busboy.on('file', function(fieldname, file, filename, encoding, mimetype) {
       console.log('File [' + fieldname + ']: filename: ' + filename + ', encoding: ' + encoding + ', mimetype: ' + mimetype);
-      let saveDir = path.join(__dirname, 'uploads', postValue);
+      let saveDir = path.join(__dirname, 'uploads', '15331132');
       if (!fs.existsSync(saveDir))
         fs.mkdirSync(saveDir);
       var saveTo = path.join(saveDir, filename);
@@ -40,8 +40,7 @@ app.post('*', function(req, res, next){
     });
     busboy.on('finish', function() {
       console.log('Done parsing form!');
-      res.writeHead(303, { Connection: 'close', Location: '/' });
-      res.end();
+      res.end(JSON.stringify({success : true}));
     });
     req.pipe(busboy);
 });
