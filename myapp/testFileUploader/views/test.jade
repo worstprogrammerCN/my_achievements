@@ -1,9 +1,25 @@
-extends studentSideBar
-
-block content
+html
+  body
+html
+  head
+    meta(charset='utf-8')
+    |     
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    //
+      jQuery
+      ======================================================================
     script(src='http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js')
-    link(href='/stylesheets/uploader/fine-uploader-new.css', rel='stylesheet')
-    script(src='/javascripts/uploader/jquery.fine-uploader.js')
+    //
+      Fine Uploader New/Modern CSS file
+      ======================================================================
+    link(href='fine-uploader-new.css', rel='stylesheet')
+    //
+      Fine Uploader jQuery JS file
+      ======================================================================
+    script(src='jquery.fine-uploader.js')
+    //
+      Fine Uploader Thumbnails template w/ customization
+      ======================================================================
     script#qq-template-manual-trigger(type='text/template').
       <div class="qq-uploader-selector qq-uploader" qq-drop-area-text="Drop files here">
       <div class="qq-total-progress-bar-container-selector qq-total-progress-bar-container">
@@ -63,39 +79,48 @@ block content
       </div>
       </dialog>
       </div>
+    |     
+    style.
+      #trigger-upload {
+      color: white;
+      background-color: #00ABC7;
+      font-size: 14px;
+      padding: 7px 20px;
+      background-image: none;
+      }
+      #fine-uploader-manual-trigger .qq-upload-button {
+      margin-right: 15px;
+      }
+      #fine-uploader-manual-trigger .buttons {
+      width: 36%;
+      }
+      #fine-uploader-manual-trigger .qq-uploader .qq-total-progress-bar-container {
+      width: 60%;
+      }
+    |     
+    title Fine Uploader Manual Upload Trigger Demo
+  body
+    //
+      Fine Uploader DOM Element
+      ======================================================================
     #fine-uploader-manual-trigger
-
-    - var homeworkRouterUrl = '/homework'
-    - var uploadUrl = studentRouterUrl + homeworkRouterUrl + '/' + homeworkName + '/upload'
-    //- form(method = 'POST'
-    //-    , enctype = 'multipart/form-data'
-    //-    , action = uploadUrl)
-    //-     input(type = 'text', name = 'textfield')
-    //-     input(type = 'file', name = 'filefield', multiple)
-    //-     input(type = 'button')
-    div#reviewers
-        p= '他人的评论:'
-        - each reviewer in reviewers
-            p= '评论人 ' + reviewer.review.reviewerName
-            if (reviewer.review.comment)
-                p= '内容 ' + reviewer.review.comment
-            else
-                p= '暂未评论'
-    p= 'reviewees length : ' + reviewees.length
-    div#reviewees
-        - if (reviewees.lenth > 0)
-        - each reviewee in reviewees
-            p= '已提交作业的同学 ' + reviewee.review.revieweeName
-            p= '学号 ' + reviewee.review.revieweeId
-            p= '你的评论 '
-            - if (reviewee.review.comment)
-                p= reviewee.review.comment
-            - else
-                p= '暂无评论'
-            input(type = 'text')
-            input(type = 'button', value = '提交评论')
-        - else
-            p= '暂无同学提交作业'
-    script(src = '/javascripts/studentHomework.js')
-
-
+    //
+      Your code to create an instance of Fine Uploader and bind to the DOM/template
+      ======================================================================
+    script.
+      $('#fine-uploader-manual-trigger').fineUploader({
+      template: 'qq-template-manual-trigger',
+      request: {
+      endpoint: '/server/uploads'
+      },
+      thumbnails: {
+      placeholders: {
+      waitingPath: 'waiting-generic.png',
+      notAvailablePath: 'not_available-generic.png'
+      }
+      },
+      autoUpload: false
+      });
+      $('#trigger-upload').click(function() {
+      $('#fine-uploader-manual-trigger').fineUploader('uploadStoredFiles');
+      });

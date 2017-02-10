@@ -18,13 +18,14 @@ app.set('view engine', 'jade');
 
 app.post('*', function(req, res, next){
     var busboy = new Busboy({ headers: req.headers });
-    let postValue;
+    let postValue = {};
     busboy.on('file', function(fieldname, file, filename, encoding, mimetype) {
       console.log('File [' + fieldname + ']: filename: ' + filename + ', encoding: ' + encoding + ', mimetype: ' + mimetype);
       let saveDir = path.join(__dirname, 'uploads', '15331132');
       if (!fs.existsSync(saveDir))
         fs.mkdirSync(saveDir);
-      var saveTo = path.join(saveDir, filename);
+      var saveTo = path.join(saveDir, postValue.qqfilename);
+      console.log(saveTo);
       file.pipe(fs.createWriteStream(saveTo, {flags : 'w+'}));
       file.on('data', function(data) {
         console.log('File [' + fieldname + '] got ' + data.length + ' bytes');
@@ -36,7 +37,7 @@ app.post('*', function(req, res, next){
     busboy.on('field', function(fieldname, val, fieldnameTruncated, valTruncated, encoding, mimetype) {
       console.log(val);
       console.log('Field [' + fieldname + ']: value: ' + inspect(val));
-      postValue = val;
+      postValue[fieldname] = val;
     });
     busboy.on('finish', function() {
       console.log('Done parsing form!');
@@ -47,7 +48,7 @@ app.post('*', function(req, res, next){
 
 app.get('*', function(req, res, next){
     var aPath = path.join(__dirname, 'views', 'test.html');
-    res.sendFile(aPath);
+    res.render('test');
 });
 
 console.log(__dirname);

@@ -40,15 +40,14 @@ router.all('/homework/:homeworkName', function(req, res, next){
   let getMission = req.student.getMission(req.params.homeworkName);
   getMission.then((mission) => {
     if (!mission){
-      res.setHeader('404', {Location : '/student/index'})
-      res.end();
+      return res.redirect('/student/index');
     }
     req.mission = mission;
-    return next();
+    next();
   })
 })
 
-router.get('/homework/:homeworkName', function(req, res, next){
+router.get('/homework/:homeworkName/', function(req, res, next){
   let homeworkName = req.params.homeworkName;
   let userId = req.user.id;
   debug(homeworkName);
@@ -114,11 +113,6 @@ router.get('/homework/:homeworkName', function(req, res, next){
   
 });
 
-router.post('homework/:homeworkName', function(req, res, next){
-  let checkIfHomeworkExist;
-  next();
-})
-
 router.post('/homework/:homeworkName/upload', function(req, res, next){
   var homeworkName = req.params.homeworkName;
   var studentId = req.student.id;
@@ -152,10 +146,10 @@ router.post('/homework/:homeworkName/upload', function(req, res, next){
         else if (isZip(uploadFileType))
           updatePromise = req.student.updateCode(homeworkName, savedFileName);
         updatePromise.then(() => {
-          res.end(JSON.stringify({ok : true}));
+          res.end(JSON.stringify({success : true}));
         }).catch((error) => {
           console.log(error);
-          res.end(JSON.stringify({ok : false}));
+          res.end(JSON.stringify({success : false}));
         })
       });
     });
@@ -165,15 +159,20 @@ router.post('/homework/:homeworkName/upload', function(req, res, next){
     });
     busboy.on('finish', function() {
       console.log('Done parsing form!');
-      res.writeHead(303, { Connection: 'close'});
       res.end(JSON.stringify({success : true}));
     });
     req.pipe(busboy);
+});
+
+router.post('homework/:homeworkName/review/revise', function(req, res, next){
+  
+})
+
+router.get('homework/:homeworkName/revieweeId/', function(req, res, next){
+  res.end('a');
 })
 
 router.post('homework/:homeworkName/download/:revieweeId', function(req, res, next){
-  checkIfReviewee; // Array.some()...
-  next();
 })
 
 router.post('homework/:homeworkName/download/:revieweeId/image', function(req, res, next){

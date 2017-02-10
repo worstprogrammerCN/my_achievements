@@ -98,136 +98,128 @@ function comparePassword(plainPassword, hashedPassword){ // return a promise wit
 }
 
 
-// router.post('/distributeReview', function(req, res, next){
-//   try{
-//   let insertReview = (reviewerId, revieweeId) => {
-//     let homeworkName = distributeSetting.homeworkName;
-//     let getReviewer = userCollection.findOne({id : reviewerId});
-//     let getReviewee = userCollection.findOne({id : revieweeId});
-//     let insertReview = 
-//       Promise.all([getReviewer, getReviewee])
-//               .then(([reviewer, reviewee]) =>{
-//                 return reviewCollection.updateOne({
-//                   homeworkName : homeworkName,
-//                   reviewerId : reviewerId,
-//                   revieweeId : revieweeId
-//                 },{$set : {
-//                   homeworkName : homeworkName,
-//                   reviewerId : reviewer.id,
-//                   reviewerName : reviewer.name,
-//                   reviewerIdentity : reviewer.identity,
-//                   revieweeId : reviewee.id,
-//                   revieweeName : reviewee.name
-//                 }}, {upsert : true, w : 1});
-//               });
-//   }
-//   let updateReviewer = (reviewerId, revieweeId) => {
-//     return missionCollection.updateOne({
-//       'recipient' : reviewerId,
-//       'homeworkName' : distributeSetting.homeworkName
-//     }, {$set : {
-//       'recipient' : reviewerId,
-//       'homeworkName' : distributeSetting.homeworkName
-//     }, $addToSet : {
-//       revieweeList : revieweeId
-//     }}, {upsert : true, w : 1});
-//   }
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-//   let updateReviewee = (reviewerId, revieweeId) => {
-//     return missionCollection.updateOne({
-//       'recipient' : revieweeId,
-//       'homeworkName' : distributeSetting.homeworkName
-//     }, {$set : {
-//       'recipient' : revieweeId,
-//       'homeworkName' : distributeSetting.homeworkName
-//     }, $addToSet : {
-//       reviewerList : reviewerId
-//     }}, {upsert : true, w : 1});
-//   };
+    <!-- jQuery
+    ====================================================================== -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 
-//   let insertMissionsAndReviews = (reviewerMembers, revieweeMembers) => {
-//     for(let j = 0; j < reviewerMembers.length; j++){
-//         for(let k = 0; k < reviewedMembers.length; k++){
-//           var reviewerId = reviewerMembers[j];
-//           var revieweeId = reviewedMembers[k];
-//           debug('reviewer', reviewerId);
-//           debug('reviewee', revieweeId);
-//           promises.push(updateReviewer(reviewerId, revieweeId));
-//           promises.push(updateReviewee(reviewerId, revieweeId));
-//           promises.push(insertReview(reviewerId, revieweeId));
-//         }
-//     }
-//   }
+    <!-- Fine Uploader Gallery CSS file
+    ====================================================================== -->
+    <link href="fine-uploader-new.css" rel="stylesheet">
 
-//   let reviewerReviewGroup = (reviewerId, webGroupMembers) => {
-//     for(k = 0; k < webGroupMembers.length; k++){
-//       var revieweeId = webGroupMembers[k];
-//       debug(reviewerId, revieweeId);
-//       promises.push(updateReviewer(reviewerId, revieweeId));
-//       promises.push(updateReviewee(reviewerId, revieweeId));
-//       promises.push(insertReview(reviewerId, revieweeId));
-//     }
-//   }
+    <!-- Fine Uploader jQuery JS file
+    ====================================================================== -->
+    <script src="jquery.fine-uploader.js"></script>
 
-//   let distributeSetting = JSON.parse(req.body.distributeSetting);
-//   debug(distributeSetting)
-//   let getWebGroups = webGroupCollection.find({
-//     'webClass.grade' : distributeSetting.webClass.grade,
-//     'webClass.number' : distributeSetting.webClass.number
-//   }).toArray();
-//   debug(distributeSetting.webClass.grade,distributeSetting.webClass.number)
-//   let getAssistants = webClassCollection.findOne({
-//     'grade' : distributeSetting.webClass.grade,
-//     'number' : distributeSetting.webClass.number 
-//   }).then((webClass) => {
-//     return webClass.assistantList;
-//   });
-//   Promise.all([getWebGroups, getAssistants]).then(([webGroups, assistants]) => {
-//     // assign for groups
-//     let shiftTimes = Math.floor(Math.random() * (webGroups.length - 1)) + 1; // 第i个组评论第i + shiftTimes个组
-//     let promises = [];
-//     for(let i = 0; i < webGroups.length; i++){ // assign for students
-//       let reviewerMembers = webGroups[i].members;
-//       let reviewedMembers = webGroups[(i + shiftTimes) % webGroups.length].members;
-//       debug(reviewerMembers);
-//       debug(reviewedMembers);
-//       for(let j = 0; j < reviewerMembers.length; j++){
-//           var reviewer = reviewerMembers[j];
-//           reviewerReviewGroup(reviewer, reviewedMembers);
-//       }
-//     }
-//     // ------------------------
-//     // assign for assistants
-//     debug(webGroups, assistants);
-//     webGroups.sort(() => {return 0.5 - Math.random()}); // 打乱各组顺序
-//     debug(assistants);
-//     let reviewCount = parseInt(webGroups.length / assistants.length); // 每个TA至少评论的组数
-//     let leftCount = webGroups.length % assistants.length // 剩下的要一个个分配给TA评论的组数
-//     for(let i = 0; i < assistants.length; i++){
-//       var assistantId = assistants[i];
-//       for(let j = 0; j < reviewCount; j++){
-//         debug(i * reviewCount + j);
-//         let webGroupMembers = webGroups[i * reviewCount + j].members;
-//         reviewerReviewGroup(assistantId, webGroupMembers);
-//       }
-//     }
-//     let startIndexInLeftGroups = reviewCount * assistants.length;
-//     for(let i = leftCount; i > 0; i--){
-//       let webGroupMembers = webGroups[webGroups.length - leftCount].members;
-//       var assistantId = assistants[i];
-//       reviewerReviewGroup(assistantId, webGroupMembers)
-//     }
+    <!-- Fine Uploader Gallery template
+    ====================================================================== -->
+    <script type="text/template" id="qq-template-gallery">
+        <div class="qq-uploader-selector qq-uploader qq-gallery" qq-drop-area-text="Drop files here">
+            <div class="qq-total-progress-bar-container-selector qq-total-progress-bar-container">
+                <div role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" class="qq-total-progress-bar-selector qq-progress-bar qq-total-progress-bar"></div>
+            </div>
+            <div class="qq-upload-drop-area-selector qq-upload-drop-area" qq-hide-dropzone>
+                <span class="qq-upload-drop-area-text-selector"></span>
+            </div>
+            <div class="qq-upload-button-selector qq-upload-button">
+                <div>Upload a file</div>
+            </div>
+            <span class="qq-drop-processing-selector qq-drop-processing">
+                <span>Processing dropped files...</span>
+                <span class="qq-drop-processing-spinner-selector qq-drop-processing-spinner"></span>
+            </span>
+            <ul class="qq-upload-list-selector qq-upload-list" role="region" aria-live="polite" aria-relevant="additions removals">
+                <li>
+                    <span role="status" class="qq-upload-status-text-selector qq-upload-status-text"></span>
+                    <div class="qq-progress-bar-container-selector qq-progress-bar-container">
+                        <div role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" class="qq-progress-bar-selector qq-progress-bar"></div>
+                    </div>
+                    <span class="qq-upload-spinner-selector qq-upload-spinner"></span>
+                    <div class="qq-thumbnail-wrapper">
+                        <img class="qq-thumbnail-selector" qq-max-size="120" qq-server-scale>
+                    </div>
+                    <button type="button" class="qq-upload-cancel-selector qq-upload-cancel">X</button>
+                    <button type="button" class="qq-upload-retry-selector qq-upload-retry">
+                        <span class="qq-btn qq-retry-icon" aria-label="Retry"></span>
+                        Retry
+                    </button>
 
-//     return promises;
-//   }).then(() => {
-//     res.end(JSON.stringify({ok : true}));
-//   }).catch((error) => {
-//     console.log(error);
-//     res.end(JSON.stringify({ok : false}));
-//   })
-//   }
-//   catch(error){
-//     console.log(error);
-//     res.end(JSON.stringify({ok : false}));
-//   }
-// })
+                    <div class="qq-file-info">
+                        <div class="qq-file-name">
+                            <span class="qq-upload-file-selector qq-upload-file"></span>
+                            <span class="qq-edit-filename-icon-selector qq-edit-filename-icon" aria-label="Edit filename"></span>
+                        </div>
+                        <input class="qq-edit-filename-selector qq-edit-filename" tabindex="0" type="text">
+                        <span class="qq-upload-size-selector qq-upload-size"></span>
+                        <button type="button" class="qq-btn qq-upload-delete-selector qq-upload-delete">
+                            <span class="qq-btn qq-delete-icon" aria-label="Delete"></span>
+                        </button>
+                        <button type="button" class="qq-btn qq-upload-pause-selector qq-upload-pause">
+                            <span class="qq-btn qq-pause-icon" aria-label="Pause"></span>
+                        </button>
+                        <button type="button" class="qq-btn qq-upload-continue-selector qq-upload-continue">
+                            <span class="qq-btn qq-continue-icon" aria-label="Continue"></span>
+                        </button>
+                    </div>
+                </li>
+            </ul>
+
+            <dialog class="qq-alert-dialog-selector">
+                <div class="qq-dialog-message-selector"></div>
+                <div class="qq-dialog-buttons">
+                    <button type="button" class="qq-cancel-button-selector">Close</button>
+                </div>
+            </dialog>
+
+            <dialog class="qq-confirm-dialog-selector">
+                <div class="qq-dialog-message-selector"></div>
+                <div class="qq-dialog-buttons">
+                    <button type="button" class="qq-cancel-button-selector">No</button>
+                    <button type="button" class="qq-ok-button-selector">Yes</button>
+                </div>
+            </dialog>
+
+            <dialog class="qq-prompt-dialog-selector">
+                <div class="qq-dialog-message-selector"></div>
+                <input type="text">
+                <div class="qq-dialog-buttons">
+                    <button type="button" class="qq-cancel-button-selector">Cancel</button>
+                    <button type="button" class="qq-ok-button-selector">Ok</button>
+                </div>
+            </dialog>
+        </div>
+    </script>
+
+    <title>Fine Uploader Gallery View Demo</title>
+</head>
+<body>
+    <!-- Fine Uploader DOM Element
+    ====================================================================== -->
+    <div id="fine-uploader-gallery"></div>
+
+    <!-- Your code to create an instance of Fine Uploader and bind to the DOM/template
+    ====================================================================== -->
+    <script>
+        $('#fine-uploader-gallery').fineUploader({
+            template: 'qq-template-gallery',
+            request: {
+                endpoint: 'http://127.0.0.1:8000/'
+            },
+            thumbnails: {
+                placeholders: {
+                    waitingPath: 'waiting-generic.png',
+                    notAvailablePath: 'not_available-generic.png'
+                }
+            },
+            validation: {
+                allowedExtensions: ['jpeg', 'jpg', 'gif', 'png']
+            }
+        });
+    </script>
+</body>
+</html>
