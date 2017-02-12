@@ -1,6 +1,7 @@
 extends studentSideBar
 
 block content
+    .homeworkName= homeworkName
     script(src='http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js')
     link(href='/stylesheets/uploader/fine-uploader-new.css', rel='stylesheet')
     script(src='/javascripts/uploader/jquery.fine-uploader.js')
@@ -85,15 +86,20 @@ block content
     div#reviewees
         - if (reviewees.lenth > 0)
         - each reviewee in reviewees
-            p= '已提交作业的同学 ' + reviewee.review.revieweeName
-            p= '学号 ' + reviewee.review.revieweeId
-            p= '你的评论 '
-            - if (reviewee.review.comment)
-                p= reviewee.review.comment
-            - else
-                p= '暂无评论'
-            input(type = 'text')
-            input(type = 'button', value = '提交评论')
+            .review
+                p= '已提交作业的同学 '
+                .revieweeName= reviewee.review.revieweeName
+                p= '学号 '
+                .revieweeId= reviewee.review.revieweeId
+                a.code(href=`${studentRouterUrl}/homework/${homeworkName}/download/code?revieweeId=${reviewee.review.revieweeId}`)= '下载代码'
+                a.image(href=`${studentRouterUrl}/homework/${homeworkName}/download/image?revieweeId=${reviewee.review.revieweeId}`)= '下载预览图'
+                p= '你的评论 '
+                - if (reviewee.review.comment)
+                    .comment= reviewee.review.comment
+                - else
+                    .comment= '暂无评论'
+                input(type = 'text').reviseComment
+                input(type = 'button', value = '提交评论').uploadReview
         - else
             p= '暂无同学提交作业'
     script(src = '/javascripts/studentHomework.js')

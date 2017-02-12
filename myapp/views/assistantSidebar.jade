@@ -1,0 +1,14 @@
+doctype html
+- var assistantRouterUrl = '/assistant';
+- var userRouterUrl = '/user';
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/style.css')
+  body
+    #sidebar
+      a(href=assistantRouterUrl + '/index')= '主页'
+      a(href=assistantRouterUrl + '/profile')= '个人设置'
+      form(action=userRouterUrl + '/logout', method='POST')
+          input(type='submit' value='登出')
+    block content

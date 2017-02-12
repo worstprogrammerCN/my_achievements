@@ -13,17 +13,22 @@ function initializeDatabase(db){
 router.use(function(req, res, next){
   req.student = new Student(req.user);
   next();
+});
+
+router.all('/homework', function(req, res, next){
+  debug('in router.all(/homework)');
+  next();
 })
 
 router.get('/index', function(req, res, next){
   req.student.getHomeworks().then((_homeworks) => {
-    let homeworks = _homeworks.map((homework) => {
+    let homeworks = _homeworks.map((homework) => {  // 会附加作业的状态
       return new Homework(homework);
-    })
+    });
     debug(homeworks);
     res.render('studentIndex', {homeworks : homeworks});
 
-  })
+  });
 });
 
 
@@ -36,24 +41,27 @@ router.get('/profile', function(req, res, next){
     console.log(err);
   })
 });
-router.all('/homework/:homeworkName', function(req, res, next){
-  let getMission = req.student.getMission(req.params.homeworkName);
-  getMission.then((mission) => {
+
+router.use('/homework/:homeworkName', function(req, res, next){
+  let ifMissionExist = req.student.getMission(req.params.homeworkName);
+  ifMissionExist.then((mission) => {
     if (!mission){
       return res.redirect('/student/index');
     }
     req.mission = mission;
+    debug("mission is ", req.mission);
     next();
   })
 })
 
-router.get('/homework/:homeworkName/', function(req, res, next){
+router.get('/homework/:homeworkName', function(req, res, next){
+  debug('in router :homeworkName');
   let homeworkName = req.params.homeworkName;
   let userId = req.user.id;
   debug(homeworkName);
   let getReviewerReview = function (reviewerIds){
     let reviews = reviewerIds.map((reviewerId) => {
-      return reviewCollection.findOne({reviewerId : reviewerId});
+      return Student.reviewCollection.findOne({reviewerId : reviewerId});
     });
     return Promise.all(reviews); 
   }
@@ -107,7 +115,8 @@ router.get('/homework/:homeworkName/', function(req, res, next){
                       return {review : reviewer};
                     })
                     res.render('studentHomework'
-                        , {reviewees : reviewees
+                        , {homeworkName : homeworkName
+                        , reviewees : reviewees
                         , reviewers : reviewers});
                   });
   
@@ -164,25 +173,62 @@ router.post('/homework/:homeworkName/upload', function(req, res, next){
     req.pipe(busboy);
 });
 
-router.post('homework/:homeworkName/review/revise', function(req, res, next){
-  
+router.post('/homework/:homeworkName/review/revise', function(req, res, next){
+  debug(req.params);
+  debug(req.body);
+  let review = JSON.parse(req.body.review);
+  let homeworkName = req.params.homeworkName;
+  let reviewerId = req.student.id;
+  let revieweeId = review.revieweeId;
+  let comment = review.comment;
+  reviewCollection.updateOne({homeworkName : homeworkName
+                          , reviewerId : req.student.id
+                          , revieweeId : revieweeId}
+                          , {$set : {
+                            comment : comment
+                          }})
+                  .then((r) => {
+                    let success = r.result.n > 0;
+                    return res.end(JSON.stringify({success : success}));
+                  });
+                  
 })
 
-router.get('homework/:homeworkName/revieweeId/', function(req, res, next){
-  res.end('a');
+router.use('/homework/:homeworkName/download/', function(req, res, next){
+  if (!req.query.revieweeId)
+    return res.end(JSON.stringify({success : false}));
+  let revieweeId = JSON.parse(req.query.revieweeId);
+  Student.missionCollection.findOne({homeworkName : req.mission.homeworkName
+                                   , recipient : req.query.revieweeId})
+                            .then((mission) => {
+                              debug(mission);
+                              if (!mission)
+                                return falseResponse(res);
+                              req.revieweeMission = mission;
+                              next();
+                            })
 })
 
-router.post('homework/:homeworkName/download/:revieweeId', function(req, res, next){
+router.get('/homework/:homeworkName/download/image', function(req, res, next){
+  let studentDir = path.join(__dirname, '../uploads', req.params.homeworkName);
+  let homeworkDir = path.join(studentDir, req.revieweeMission.recipient);
+  let image = req.revieweeMission.image;
+  let saveDir = path.join(homeworkDir, image);
+  debug(saveDir);
+  res.download(saveDir);
 })
 
-router.post('homework/:homeworkName/download/:revieweeId/image', function(req, res, next){
-  // getRevieweeCode
-
-  
-})
-
-router.post('homework/:homeworkName/download/:revieweeId/code', function(req, res, next){
-  // getRevieweeImage
+router.get('/homework/:homeworkName/download/code', function(req, res, next){
+  debug('in code');
+  try{let studentDir = path.join(__dirname, '../uploads', req.params.homeworkName);
+  let homeworkDir = path.join(studentDir, req.revieweeMission.recipient);
+  let code = req.revieweeMission.code;
+  let saveDir = path.join(homeworkDir, code);
+  debug(saveDir);
+  res.download(saveDir);}
+  catch(e){
+    debug(e);
+  }
 })
 
 router.post('/homework/:homeworkName/review/:revieweeId/revise', function(req, res, next){
@@ -201,6 +247,15 @@ function isPicture(type){
 function isZip(type){
   return type == 'zip' || type == 'rar';
 }
+
+function falseResponse(res){
+  return res.end(JSON.stringify({success : false}));
+}
+
+function successResponse(res){
+  return res.end(JSON.stringify({success : true}));
+}
+
 
 module.exports = {
   router : router,

@@ -17,6 +17,7 @@ var MongoStore = require('connect-mongo')(session);
 var user = require('./routes/user');
 var student = require('./routes/student');
 var teacher = require('./routes/teacher');
+var assistant = require('./routes/assistant');
 var administor = require('./routes/administor');
 
 //connect to mongodb
@@ -57,6 +58,7 @@ app.use(passport.session());
 app.use('/user', user.router);
 app.use('/student', student.router);
 app.use('/teacher', teacher.router);
+app.use('/assistant', assistant.router);
 app.use('/administor', administor.router);
 
 // catch 404 and forward to error handler
@@ -81,8 +83,9 @@ app.use(function(err, req, res, next) {
 function routerInitialize(db){
   student.initializeDatabase(db);
   teacher.initializeDatabase(db);
-  user.initialize(passport, localStrategy, db);
+  assistant.initializeDatabase(db);
   administor.initialize(db);
+  user.initialize(passport, localStrategy, db);
   module.exports.closeDatabase = function(){
     db.close();
   }

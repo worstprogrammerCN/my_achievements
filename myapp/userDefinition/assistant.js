@@ -4,6 +4,7 @@ class Assistant extends User{
 
     constructor(assistant){
         super(assistant);
+        this.webClass = assistant.webClass
     }
     
 }
