@@ -218,6 +218,7 @@ router.post('/distributeReview', function(req, res, next){
     }
   }
 
+
   let distributeSetting = JSON.parse(req.body.distributeSetting);
   let webClass = distributeSetting.webClass;
   Promise.all([getWebGroups(webClass), getAssistants(webClass)]).then(([webGroups, assistants]) => {
@@ -384,6 +385,19 @@ router.get('/homework/:homeworkName/download/image', function(req, res, next){
 router.get('/homework/:homeworkName/download/code', function(req, res, next){
   var dir = homeworkDir(req.params.homeworkName, req.revieweeMission, "code");
   res.download(dir);
+})
+
+router.post('/homework/:homeworkName/reviseScore', function(req, res, next){
+  let revieweeId = req.body.revieweeId;
+  let score = req.body.score;
+  Teacher.missionCollection
+    .updateOne({'homeworkName' : req.params.homeworkName,
+             'recipient' : revieweeId}, 
+             {$set : {'score' : score}})
+    .then((r) => {
+      let success = r.result.n == 1;
+      res.end(JSON.stringify({success : success}));
+    })
 })
 
 router.get('/profile', function(req, res, next){

@@ -1,0 +1,33 @@
+.information-panel{
+    margin-top: 10px;
+	margin-left: auto;
+    margin-right: auto;
+	width:300px;
+}
+
+.information-head{
+	background-color:  rgb(106, 90, 140);
+	padding:20px 40px 20px 40px;
+	text-align:center;
+	font-weight:bold;
+	font-size: 30px;
+	color:white;
+	font-family:sans-serif;
+}
+
+.information-body ul{
+	margin:0px;
+	padding:0px;
+}
+
+.information-body li{
+	list-style:none;
+	margin-top: -1px;
+	border-top: 1px  solid rgb(46, 46, 46);
+	padding:13px 20px 15px;
+	background-color: rgb(35, 35, 35);
+	font-size:20px;
+	color:#aaa;
+	font-family:sans-serif;
+	text-align:center;
+}

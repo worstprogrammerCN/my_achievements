@@ -1,15 +1,15 @@
 extends teacherSidebar
 
 block content
-    if user
-        h1= 'hello! ' + user.name
-    else
-        h1= 'no user'
-    #profile
-        ul
-            li= '姓名 ' + user.name
-            li= '学号 ' + user.id
-            li= '邮箱 ' + user.email
-            li= '权限 ' + user.identity
+    link(rel = 'stylesheet', href = '/stylesheets/information.css')
+    .information-panel
+        .information-head= '您好! ' +  user.name
+        .information-body
+            ul
+                li= '姓名 ' + user.name
+                li= '帐号 ' + user.id
+                li= '邮箱 ' + user.email
+                li= '权限 ' + user.identity
+        
 
 

@@ -2,26 +2,26 @@ $(function(){
     var studentRouterUrl = '/student';
     var uploadUrl = window.location + '/upload';
     var reviseReviewUrl = window.location + '/review/revise';
-    var uploadReview = function(){
-        var $review = $(this).parent(".review");
+    // var uploadReview = function(){
+    //     var $review = $(this).parent(".review");
 
-        var review = {
-            revieweeId : $review.find(".revieweeId").text(),
-            comment : $review.find(".reviseComment").val()
-        }
-        $.post(reviseReviewUrl, {review : JSON.stringify(review)})
-        .done((result) => {
-            result = JSON.parse(result);
-            if (result.success){
-                var $comment = $review.find(".comment");
-                console.log($comment.text());
-                console.log(review.comment);
-                $comment.text(review.comment);
-            }else{
-                alert("fail!");
-            }
-        })
-    };
+    //     var review = {
+    //         revieweeId : $review.find(".revieweeId").text(),
+    //         comment : $review.find(".reviseComment").val()
+    //     }
+    //     $.post(reviseReviewUrl, {review : JSON.stringify(review)})
+    //     .done((result) => {
+    //         result = JSON.parse(result);
+    //         if (result.success){
+    //             var $comment = $review.find(".comment");
+    //             console.log($comment.text());
+    //             console.log(review.comment);
+    //             $comment.text(review.comment);
+    //         }else{
+    //             alert("fail!");
+    //         }
+    //     })
+    // };
 
     var downloadCode = function(){
         $review = $(this).parent(".review");
@@ -32,8 +32,8 @@ $(function(){
         $("<form>").attr("action", url).text("下载").submit();
     }
 
-    $('#fine-uploader-manual-trigger').fineUploader({
-        template: 'qq-template-manual-trigger',
+    $('#code-uploader-manual-trigger').fineUploader({
+        template: 'code-uploader',
         request: {
         endpoint: uploadUrl
     },
@@ -49,8 +49,8 @@ $(function(){
     },
     autoUpload: false
     });
-    $('#img-uploader').fineUploader({
-        template: 'qq-template-manual-trigger',
+    $('#image-uploader-trigger').fineUploader({
+        template: 'image-uploader',
         request: {
         endpoint: uploadUrl
     },
@@ -66,12 +66,12 @@ $(function(){
     },
     autoUpload: false
     });
-    $('#trigger-upload').click(function() {
-        $('#fine-uploader-manual-trigger').fineUploader('uploadStoredFiles');
+    $('#code-uploader-manual-trigger #trigger-upload').click(function() {
+        $('#code-uploader-manual-trigger').fineUploader('uploadStoredFiles');
     });
-    $('#img-trigger-upload').click(function() {
-        $('img-uploader').fineUploader('uploadStoredFiles');
+    $('#image-uploader-trigger #trigger-upload').click(function() {
+        $('#image-uploader-trigger').fineUploader('uploadStoredFiles');
     });
-    $(".review .uploadReview").click(uploadReview);
+    // $(".review .uploadReview").click(uploadReview);
     $(".code").click(downloadCode);
 })

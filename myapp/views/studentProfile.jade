@@ -1,24 +1,21 @@
 extends studentSidebar
 
 block content
-    if user
-        h1= 'hello! ' + user.name
-    else
-        h1= 'no user'
-    #profile
-        ul
-            li= '姓名 ' + user.name
-            li= '学号 ' + user.id
-            li= '邮箱 ' + user.email
-            li= '班级 ' + user.webClass
-            li= '小组 ' + user.group
-            li= '权限 ' + user.identity
-    - if (groupMates)
-      div#groupmates
-          h1= '组员们'
-          ul
-              - for (var teammateIndex in groupMates)
-                p= groupMates[teammateIndex].name
-    - else
-      h1= 'no group'
+    link(rel = 'stylesheet', href = '/stylesheets/information.css')
+    .information-panel
+        .information-head= '个人信息'
+        .information-body
+            ul
+                li= '姓名 ' + user.name
+                li= '学号 ' + user.id
+                li= '邮箱 ' + user.email
+                li= `${user.webClass.grade}级${user.webClass.number}班`
+                li= '小组 ' + user.group
+                li= '权限 ' + user.identity
+    .information-panel
+        .information-head= '组员们'
+        .information-body
+         ul
+            - for (var teammateIndex in groupMates)
+              li= groupMates[teammateIndex].name
 

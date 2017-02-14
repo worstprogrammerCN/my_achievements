@@ -1,0 +1,8 @@
+.buttons button{
+    cursor: pointer;
+}
+
+#fine-uploader-manual-trigger, #img-uploader{
+    display: inline-block;
+    width: 50%;
+}
