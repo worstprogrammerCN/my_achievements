@@ -1,9 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const debug = require('debug')('Assistant');
+const path = require('path');
 const Assistant = require('../userDefinition/assistant.js');
 const Homework = require('../userDefinition/homework.js');
-const path = require('path');
+
+const assistantRouterUrl = '/assistant';
 
 
 function initializeDatabase(db){
@@ -25,17 +27,34 @@ router.get('/index', function(req, res, next){
 
 
 router.get('/profile', function(req, res, next){
-  
+  let getGroupMates = (webClass) => {
+    return Assistant.webClassCollection
+      .findOne({'grade' : webClass.grade,
+                'number' : webClass.number})
+      .then((webClass) => {
+        let getProfiles = webClass.assistantList.map((assistantId) => {
+          return Assistant.userCollection.findOne({id : assistantId});
+        });
+        return Promise.all(getProfiles);
+      })
+  };
+  getGroupMates(req.assistant.webClass).then((groupMates) => {
+    debug(req.assistant, groupMates);
+    res.render('assistantProfile', 
+              {user : req.assistant,
+              groupMates : groupMates});
+  })
 });
 
 router.use('/homework/:homeworkName', function(req, res, next){
   let ifMissionExist = (homeworkName) => {
-    return Assistant.missionCollection.findOne({recipient : req.assistant.id
-                                           , homeworkName : homeworkName});
+    return Assistant.missionCollection
+            .findOne({recipient : req.assistant.id,
+                      homeworkName : homeworkName});
   };
   ifMissionExist(req.params.homeworkName).then((mission) => {
     if (!mission){
-      return res.redirect('/assistant/index');
+      return res.redirect(`${assistantRouterUrl}/index`);
     }
     req.mission = mission;
     debug("mission is ", req.mission);
@@ -162,6 +181,14 @@ router.get('/homework/:homeworkName/download/code', function(req, res, next){
 
 function homeworkDir(homeworkName, mission, property){
   return path.join(__dirname, '../uploads', homeworkName, mission.recipient, mission[property]);
+}
+
+function falseResponse(res){
+  return res.end(JSON.stringify({success : false}));
+}
+
+function successResponse(res){
+  return res.end(JSON.stringify({success : true}));
 }
 
 module.exports = {

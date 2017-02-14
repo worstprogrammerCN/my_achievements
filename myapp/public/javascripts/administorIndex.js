@@ -4,7 +4,7 @@ $(function(){
     let addwebClassUrl = administorRouterUrl + '/addWebClass';
     let divideGroupUrl = administorRouterUrl + '/divideGroup';
     let distributeSettingUrl = administorRouterUrl + '/distributeReview';
-    function checkUser(){
+    function addUser(){
         let $form = $('#addUser');
         var user = {
             id : $form.find('input[name = "id"]').val(),
@@ -37,7 +37,7 @@ $(function(){
             })
         }      
     }
-    function checkWebClass(){
+    function addWebClass(){
         let $form = $('#addWebClass');
         let webClass = {
             grade : parseInt($form.find('input[name = "grade"]').val()),
@@ -83,7 +83,7 @@ $(function(){
         })   
     }
 
-    function checkDistributeSetting(){
+    function distributeReview(){
         $form = $('#distributeReview');
         var distributeSetting = {
             webClass : {
@@ -108,8 +108,8 @@ $(function(){
         })   
     }
 
-    $('#addUser .submitButton').click(checkUser);
-    $('#addWebClass .submitButton').click(checkWebClass);
+    $('#addUser .submitButton').click(addUser);
+    $('#addWebClass .submitButton').click(addWebClass);
     $('#divideGroup .submitButton').click(divideGroup);
-    $('#distributeReview .submitButton').click(checkDistributeSetting);
+    $('#distributeReview .submitButton').click(distributeReview);
 })

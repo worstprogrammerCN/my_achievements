@@ -43,10 +43,34 @@ $(function(){
         notAvailablePath: '/images/uploader/not_available-generic.png'
         }
     },
+    validation: {
+        allowedExtensions: ['zip', 'rar'],
+        itemLimit: 1
+    },
+    autoUpload: false
+    });
+    $('#img-uploader').fineUploader({
+        template: 'qq-template-manual-trigger',
+        request: {
+        endpoint: uploadUrl
+    },
+    thumbnails: {
+        placeholders: {
+        waitingPath: '/images/uploader/waiting-generic.png',
+        notAvailablePath: '/images/uploader/not_available-generic.png'
+        }
+    },
+    validation: {
+        allowedExtensions: ['jpeg', 'jpg', 'png'],
+        itemLimit: 1
+    },
     autoUpload: false
     });
     $('#trigger-upload').click(function() {
         $('#fine-uploader-manual-trigger').fineUploader('uploadStoredFiles');
+    });
+    $('#img-trigger-upload').click(function() {
+        $('img-uploader').fineUploader('uploadStoredFiles');
     });
     $(".review .uploadReview").click(uploadReview);
     $(".code").click(downloadCode);

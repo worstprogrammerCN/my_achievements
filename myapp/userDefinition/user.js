@@ -19,6 +19,7 @@ class User{
         User.userCollection = db.collection('user');
         User.homeworkCollection = db.collection('homework');
         User.webClassCollection = db.collection('webClass');
+        User.webGroupCollection = db.collection('webGroup');
         User.missionCollection = db.collection('mission');
         User.reviewCollection = db.collection('review');
     }

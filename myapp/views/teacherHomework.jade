@@ -1,0 +1,36 @@
+extends teacherSideBar
+
+block content
+    link(href = 'stylesheets/style.css')
+    .homeworkName= homeworkName
+
+    - var homeworkRouterUrl = '/homework'
+    #webClasses
+        - each webClass in webClasses
+            .webClass
+                .webClassTitle= `${webClass.grade}级${webClass.number}班`
+                ul.reviewees
+                    - each reviewee in webClass.reviewees
+                        li.reviewee
+                            
+                            span.id= reviewee.recipient
+                            if (reviewee.code)
+                                a.code(href=`${teacherRouterUrl}/homework/${homeworkName}/download/code?revieweeId=${reviewee.recipient}`, download)= '下载代码'
+                            else
+                                span= '暂未提交代码'
+                            if (reviewee.image)
+                                a.image(href=`${teacherRouterUrl}/homework/${homeworkName}/download/image?revieweeId=${reviewee.recipient}`, download)= '下载预览图'
+                            else
+                                span= '暂未提交图片'
+                            span.suggestedScore= reviewee.suggestedScore
+                            if (reviewee.score)
+                                span.score= reviewee.score
+                            else
+                                span.score= '暂无分数'
+                            input.reviseScore(type = 'text', placeholder = '修改分数:')
+                            button.submitScore= '提交分数'
+    #reviews
+
+    script(src = '/javascripts/teacherHomework.js')
+
+

@@ -54,6 +54,7 @@ router.post('/addUser', function(req, res, next){
 
 router.post('/addWebClass', function(req, res, next){
   let webClass = JSON.parse(req.body.webClass);
+  webClass.assistantList = [];
   debug(webClass);
   webClassCollection.insertOne(webClass)
   .then((r) => {
@@ -66,38 +67,65 @@ router.post('/addWebClass', function(req, res, next){
 });
 
 router.post('/divideGroup', function(req, res, next){
-  let divideSetting = JSON.parse(req.body.divideSetting);
-  userCollection.find({
-    'webClass.grade' : divideSetting.webClass.grade,
-    'webClass.number' : divideSetting.webClass.number
-  }).toArray()
-  .then((studentsWithoutGroup) => {
-    let groupCount = Math.ceil(studentsWithoutGroup.length / divideSetting.maxNumber);
-    studentsWithoutGroup.sort(() => {return 0.5 - Math.random()});
-    let promises = [];
-    for(var index = 0; index < studentsWithoutGroup.length; index++){
-      let student = studentsWithoutGroup[index];
-      let group = parseInt(index / groupCount) + 1;
-      debug('index, groupCount, group:', index, groupCount, group); 
-      let addStudentToGroupPromise = webGroupCollection.updateOne({ // 向webClass的members添加student的id
-          'webClass.grade' : student.webClass.grade,
-          'webClass.number' : student.webClass.number,
-          'number' : group
+   try{
+  let addWebGroup = (grade, number, index) => {
+      return webGroupCollection.updateOne({ // 向webClass的members添加student的id
+          'webClass.grade' : grade,
+          'webClass.number' : number,
+          'number' : index
       }, {$set : {
         'webClass' : {
-          'grade' : student.webClass.grade,
-          'number' : student.webClass.number
+            'grade' : grade,
+            'number' : number
         },
-        'number' : group
-      }, $$addToSet : {'members' : student.id}}, {upsert : true, w : 1});
-      let updateStudentGroupPromise = userCollection
-                                     .updateOne({id : student.id}
-                                              , {$set : {group : group}});
-      debug(addStudentToGroupPromise,
-      updateStudentGroupPromise);
-      promises.push(addStudentToGroupPromise,
-                    updateStudentGroupPromise);
-    }
+        'number' : index
+      }}, {upsert : true, w : 1});
+  };
+
+  let addStudentToGroup = (student, group) => {
+      return webGroupCollection.updateOne({
+                'webClass.grade' : student.webClass.grade,
+                'webClass.number' : student.webClass.number,
+                'number' : group
+            }, {$addToSet : {'members' : student.id}});
+  };
+
+  let updateStudentGroupProperty = (student, group) => {
+    debug(student, group);
+    return userCollection
+            .updateOne({id : student.id},
+                    {$set : {group : group}});
+  }
+
+  let divideSetting = JSON.parse(req.body.divideSetting);
+  var _groupCount;
+  var _students;
+  webGroupCollection
+    .deleteMany({'webClass.grade' : divideSetting.webClass.grade,
+                 'webClass.number' : divideSetting.webClass.number})
+  .then(() => {
+    return userCollection.find({
+        'webClass.grade' : divideSetting.webClass.grade,
+        'webClass.number' : divideSetting.webClass.number
+    }).toArray()
+  })
+  .then((students) => {
+    _students = students;
+    _groupCount = groupCount = Math.ceil(students.length / divideSetting.maxNumber);
+    students.sort(() => 0.5 - Math.random());
+    let addWebGroups = [];
+    for(let index = 0; index < groupCount; index++)
+        addWebGroups.push(addWebGroup(divideSetting.webClass.grade, divideSetting.webClass.number, index + 1));
+    return Promise.all(addWebGroups);
+  }).then((results) => {
+    let students = _students;
+    let groupCount = _groupCount;
+    let promises = [];
+    students.forEach((student, index) => {
+        let groupNumber = parseInt(index / groupCount) + 1;
+        promises.push(addStudentToGroup(student, groupNumber),
+                    updateStudentGroupProperty(student, groupNumber));
+    });
     return Promise.all(promises);
   }).then((r) => {
     res.end(JSON.stringify({ok : true}));
@@ -105,6 +133,10 @@ router.post('/divideGroup', function(req, res, next){
     console.log(error);
     res.end(JSON.stringify({ok : false}));
   })
+    }
+    catch(err) {
+        console.log(err);
+    }
 });
 
 
@@ -147,7 +179,7 @@ router.post('/distributeReview', function(req, res, next){
               });
   }
   let updateReviewer = (reviewerId, revieweeId) => {
-    return missionCollection.updateOne({
+    return missionCollection.findOneAndUpdate({
       'recipient' : reviewerId,
       'homeworkName' : distributeSetting.homeworkName
     }, {$set : {
@@ -159,7 +191,7 @@ router.post('/distributeReview', function(req, res, next){
   }
 
   let updateReviewee = (reviewerId, revieweeId) => {
-    return missionCollection.updateOne({
+    return missionCollection.findOneAndUpdate({
       'recipient' : revieweeId,
       'homeworkName' : distributeSetting.homeworkName
     }, {$set : {
@@ -256,3 +288,4 @@ module.exports = {
   router : router,
   initialize : initialize
 }
+

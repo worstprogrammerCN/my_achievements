@@ -1,0 +1,22 @@
+#homeworks
+  link(rel = 'stylesheet', href = '/stylesheets/homework.css')
+  h2.homeworkListTitle= '作业列表'
+  ul
+    - each homework in homeworks
+      li
+        p.name
+          span.property= '作业名' 
+          span.homework.name= homework.name
+        p.description
+          span.homework.description= homework.description
+        p.link
+          span.property= '链接'
+          a.homework.link(href = homework.link)= homework.link
+        p.startTime
+          span.property= '开始时间'
+          span.homework.startTime= homework.startTime
+        p.endTime
+          span.property= '结束时间'
+          span.homework.endTime= homework.endTime
+        p.detail
+          a.homework.detail.btn.btn-info(href = `${identityRouterUrl}/homework/${homework.name}`)= '查看详情'

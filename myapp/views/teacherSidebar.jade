@@ -1,12 +1,16 @@
 doctype html
+- var teacherRouterUrl = '/teacher';
+- var identityRouterUrl = '/teacher';
 html
   head
     title= title
+    include includes/cdn
     link(rel='stylesheet', href='/stylesheets/style.css')
+    script(src = '/javascripts/style.js')
   body
     div#sidebar
-      a(href='/teachers/index')= '主页'
-      a(href='/teachers/profile')= '个人设置'
-      form(action='/user/logout', method='POST')
-          input(type='submit' value='登出')
+      a(href='/teacher/index')= '主页'
+      a(href='/teacher/profile')= '个人设置'
+      form.logout(action='/user/logout', method='POST')
+          a.logout= '登出'
     block content
