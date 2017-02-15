@@ -1,0 +1,26 @@
+.homeworkName{
+    color: orangered;
+    font-weight: bold;
+    font-size: 50px;
+    text-align: center;
+}
+
+.resultScore{
+    font-weight: bold;
+    text-align: center;
+}
+
+#uploaders{
+    width: 60%;
+    margin: 0 auto;
+}
+
+#code-uploader-manual-trigger, #image-uploader-trigger{
+    display: inline-block;
+    width: 50%;
+}
+
+#uploaders > div .qq-uploader{
+    width: 100%;
+}
+

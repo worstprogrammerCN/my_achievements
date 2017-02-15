@@ -1,0 +1,16 @@
+doctype html
+- var studentRouterUrl = '/student';
+- var identityRouterUrl = '/student';
+html
+  head
+    title= title
+    include includes/cdn
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    script(src = '/javascripts/style.js')
+  body
+    div#sidebar
+      a(href='/student/index')= '主页'
+      a(href='/student/profile')= '个人设置'
+      form.logout(action='/user/logout', method='POST')
+          a.logout= '登出'
+    block content

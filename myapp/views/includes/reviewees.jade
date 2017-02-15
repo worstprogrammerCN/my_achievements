@@ -1,0 +1,16 @@
+link(href='/stylesheets/reviewees.css', rel='stylesheet')
+script(src='/javascripts/reviewees.js')
+div#reviewees
+    - each reviewee in reviewees
+        .review
+            p.revieweeName= reviewee.review.revieweeName
+                span.revieweeId= reviewee.review.revieweeId
+            img.image(src=`${identityRouterUrl}/homework/${homeworkName}/download/image?revieweeId=${reviewee.review.revieweeId}`)
+            .download
+                a.code.btn.btn-info.btn-lg(href=`${identityRouterUrl}/homework/${homeworkName}/download/code?revieweeId=${reviewee.review.revieweeId}`)= '下载代码'
+                a.image.btn.btn-info.btn-lg(href=`${identityRouterUrl}/homework/${homeworkName}/download/image?revieweeId=${reviewee.review.revieweeId}`)= '下载预览图'
+            - if (reviewee.review.comment)
+                textarea.comment(readonly='readonly')= reviewee.review.comment
+            - else
+                textarea.comment(readonly='readonly')= '暂无评论'
+            input(type = 'button', value = '修改').uploadReview.btn.btn-warning

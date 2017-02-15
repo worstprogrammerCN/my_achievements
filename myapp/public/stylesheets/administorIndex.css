@@ -1,0 +1,7 @@
+input{
+    display: block;
+}
+#addUser{
+    display: inline-block;
+    width: 300px;
+}

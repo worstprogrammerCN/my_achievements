@@ -1,0 +1,11 @@
+extends assistantSideBar
+
+block content
+    .homeworkName= homeworkName
+    include includes/reviewees
+    - var homeworkRouterUrl = '/homework'
+    
+  
+    script(src = '/javascripts/assistantHomework.js')
+
+

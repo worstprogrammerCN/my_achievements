@@ -1,0 +1,32 @@
+extends teacherSidebar
+
+block content
+  #panel
+    #addWebClass 
+      h2= '增加班级'
+      input(name = 'grade' placeholder = 'webClass grade')
+      input(name = 'number' placeholder = 'webClass number')
+      input.submitButton.btn.btn-primary(type = 'button' value = '增加班级')
+    #divideGroup 
+      h2= '分配组员'
+      input(name = 'grade' placeholder = 'grade')
+      input(name = 'number' placeholder = 'number')
+      input(name = 'maxNumber' placeholder = '每组最多人数')
+      input.submitButton.btn.btn-primary(type = 'button' value = '开始分组')
+    #makeHomework 
+      h2= '制定作业'
+      input(name = 'name', placeholder = '名字')
+      textarea(name = 'description', placeholder = '描述')
+      input(name = 'link', placeholder = '链接')
+      input(name = 'startTime', placeholder = '开始时间')
+      input(name = 'endTime', placeholder = '结束时间')
+      input#makeHomeworkSubmit.btn.btn-primary(type = 'button', value = '提交')
+    #distributeReview 
+      h2= '分配评论'
+      input(name = 'grade' placeholder = 'webClass grade')
+      input(name = 'number' placeholder = 'webClass number')
+      input(name = 'homeworkName' placeholder = 'homework name')
+      input.submitButton.btn.btn-primary(type = 'button' value = '开始分配')
+  include includes/homework
+  link(href = '/stylesheets/teacherIndex.css', rel = 'stylesheet')
+  script(src = '/javascripts/teacherIndex.js')

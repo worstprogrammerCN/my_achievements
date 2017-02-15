@@ -1,0 +1,92 @@
+body{
+    position: relative;
+    margin-top: 7%;
+    background-image: url('../images/login.jpg');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
+
+*{
+    margin: 0px;
+    padding: 0px;
+    border-radius: 3%;
+}
+
+h1, h2, .description{
+    margin-top: 1%;
+    color: white;
+    text-align: center;
+}
+
+h3{
+    padding-top: 5%;
+    color: rgb(85, 85, 85);
+}
+
+h4{
+    color: rgb(136, 136, 136);
+}
+
+h3, h4{
+    display: inline-block;
+}
+
+
+#loginPanel{
+    margin-top: 5%;
+    width: 30%;
+    height: 35%;
+    margin-left:auto;
+    margin-right:auto;
+    background-color: white; 
+}
+
+#loginPanel .header{
+    position: relative;
+    padding-left: 5%;
+    padding-right: 5%;
+    padding-bottom: 3%;
+    height: 30%;
+}
+
+i.fa-key{
+    position: absolute;
+    top:10%;
+    right: 5%;
+}
+
+#loginPanel .footer{
+    padding-left: 5%;
+    padding-right: 5%;
+    padding-top: 3%;
+    padding-bottom: 1%;
+    height: 70%;
+    background: lightgrey;
+}
+
+.footer input{
+    font-size: 20px;
+    height: 20%;
+    width: 100%;
+    margin-bottom: 5%;
+    padding-left: 3%;
+    border: 1px solid rgb(221, 221, 221);
+    border-radius: 15px;
+}
+
+.footer input:focus{
+    border: 1px solid rgb(204, 204, 204);
+}
+
+.footer button{
+    cursor: pointer;
+    width: 100%;
+    height: 20%;
+    background-color: rgb(74, 175, 81);
+    color: white;
+    font-size: 100%;
+}
+
+.footer button:hover{
+    background-color: rgb(139, 200, 143);
+}

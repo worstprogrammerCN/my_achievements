@@ -1,0 +1,38 @@
+- var userRouterUrl = '/user'
+- var administorRouterUrl = '/administor'
+head
+    link(rel = 'stylesheet' href = '/stylesheets/administorIndex.css')
+
+body
+    h1= 'hello! ' + user.name
+    form(action= userRouterUrl + '/logout', method='POST')
+        input(type='submit' value='登出')
+    form#addUser
+        input(name = 'id' placeholder = 'id')
+        input(name = 'name' placeholder = 'name')
+        input(name = 'password', type = 'password', placeholder = 'password')
+        input(name = 'email', placeholder = 'email,可为空')
+        input(name = 'grade' placeholder = 'webClass grade')
+        input(name = 'number' placeholder = 'webClass number')
+        input(name = 'identity' placeholder = 'identity')
+        input.submitButton(type = 'button' value = '增加用户')
+    button#deleteUser 删除用户
+    form#addWebClass 增加班级
+        input(name = 'grade' placeholder = 'webClass grade')
+        input(name = 'number' placeholder = 'webClass number')
+        input.submitButton(type = 'button' value = '增加班级')
+    form#divideGroup 分配组员
+        input(name = 'grade' placeholder = 'grade')
+        input(name = 'number' placeholder = 'number')
+        input(name = 'maxNumber' placeholder = '每组最多人数')
+        input.submitButton(type = 'button' value = '自动分组')
+    form#distributeReview 分配评论
+        input(name = 'grade' placeholder = 'webClass grade')
+        input(name = 'number' placeholder = 'webClass number')
+        input(name = 'homeworkName' placeholder = 'homework name')
+        input.submitButton(type = 'button' value = '分配评论')
+    button#deleteClass 删除班级
+    button#assignJob 赋予用户权限
+    
+    script(src = '/javascripts/userValidator.js')
+    script(src = '/javascripts/administorIndex.js')
