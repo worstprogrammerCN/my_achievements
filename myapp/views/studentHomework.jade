@@ -2,8 +2,8 @@ extends studentSideBar
 
 block content
     .homeworkName= homeworkName
+    script(src='http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js')
     link(href='/stylesheets/uploader/fine-uploader-new.css', rel='stylesheet')
-    link(href='/stylesheets/upload.css', rel='stylesheet')
     script(src='/javascripts/uploader/jquery.fine-uploader.js')
     script#qq-template-manual-trigger(type='text/template').
       <div class="qq-uploader-selector qq-uploader" qq-drop-area-text="Drop files here">
@@ -65,7 +65,6 @@ block content
       </dialog>
       </div>
     #fine-uploader-manual-trigger
-    #img-uploader
 
     - var homeworkRouterUrl = '/homework'
     - var uploadUrl = studentRouterUrl + homeworkRouterUrl + '/' + homeworkName + '/upload'

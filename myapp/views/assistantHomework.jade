@@ -2,10 +2,11 @@ extends assistantSideBar
 
 block content
     .homeworkName= homeworkName
+    script(src='http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js')
 
     - var homeworkRouterUrl = '/homework'
     p= 'reviewees length : ' + reviewees.length
-    #reviewees
+    div#reviewees
         - if (reviewees.lenth > 0)
         - each reviewee in reviewees
             .review
@@ -24,7 +25,6 @@ block content
                 input(type = 'button', value = '提交评论').uploadReview
         - else
             p= '暂无同学提交作业'
-  
     script(src = '/javascripts/assistantHomework.js')
 
 

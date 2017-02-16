@@ -22,9 +22,12 @@ router.all('/homework', function(req, res, next){
 
 router.get('/index', function(req, res, next){
   req.student.getHomeworks().then((_homeworks) => {
-    let homeworks = _homeworks.map((homework) => new Homework(homework));
+    let homeworks = _homeworks.map((homework) => {  // 会附加作业的状态
+      return new Homework(homework);
+    });
     debug(homeworks);
     res.render('studentIndex', {homeworks : homeworks});
+
   });
 });
 
@@ -32,8 +35,8 @@ router.get('/index', function(req, res, next){
 router.get('/profile', function(req, res, next){
   var studentWithoutPassword = Student.getUserWithoutPassword(req.student);
   req.student.getGroupmates().then((groupMates) => {
-    res.render('studentProfile', {user : studentWithoutPassword,
-                                  groupMates : groupMates});
+    res.render('studentProfile', {user : studentWithoutPassword
+                          , groupMates : groupMates});
   }).catch((err) => {
     console.log(err);
   })

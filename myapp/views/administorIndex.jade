@@ -17,15 +17,15 @@ body
         input(name = 'identity' placeholder = 'identity')
         input.submitButton(type = 'button' value = '增加用户')
     button#deleteUser 删除用户
-    form#addWebClass 增加班级
-        input(name = 'grade' placeholder = 'webClass grade')
-        input(name = 'number' placeholder = 'webClass number')
-        input.submitButton(type = 'button' value = '增加班级')
-    form#divideGroup 分配组员
+    form#divideGroup
         input(name = 'grade' placeholder = 'grade')
         input(name = 'number' placeholder = 'number')
         input(name = 'maxNumber' placeholder = '每组最多人数')
         input.submitButton(type = 'button' value = '自动分组')
+    form#addWebClass 增加班级
+        input(name = 'grade' placeholder = 'webClass grade')
+        input(name = 'number' placeholder = 'webClass number')
+        input.submitButton(type = 'button' value = '增加班级')
     form#distributeReview 分配评论
         input(name = 'grade' placeholder = 'webClass grade')
         input(name = 'number' placeholder = 'webClass number')
@@ -33,6 +33,6 @@ body
         input.submitButton(type = 'button' value = '分配评论')
     button#deleteClass 删除班级
     button#assignJob 赋予用户权限
-    
+    include includes/cdn
     script(src = '/javascripts/userValidator.js')
     script(src = '/javascripts/administorIndex.js')

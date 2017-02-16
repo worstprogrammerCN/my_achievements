@@ -2,19 +2,11 @@
 head
   link(rel='stylesheet', href='/stylesheets/login.css')
 body
-  h1= 'My Achievements'
-  .description= 'modern web programming 2.0 : course project. '
-    strong= '简单实现的作业提交系统'
   form#loginPanel
-    .header
-      h3= 'Login your account!'
-      br
-      i.fa.fa-key.fa-4x
-      h4= 'Enter your id and password to sign in!'
+    input(name = 'id')
+    input(type = 'password', name = 'password')
+    input#login(type = 'button' value = '登录')
 
-    .footer
-        input.form-control(name = 'id', placeholder="account id")
-        input.form-control(name = 'password', type='password', placeholder="password")
-        button(type='button')#login= '登录！'
-  script(src = 'http://cdn.bootcss.com/jquery/3.1.1/jquery.min.js')
-  script(src = '/javascripts/login.js')
+  include includes/cdn
+  script(src='/javascripts/login.js')
+
