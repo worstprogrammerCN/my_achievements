@@ -1,7 +1,0 @@
-link(href='/stylesheets/reviewers.css', rel='stylesheet')
-div#reviewers
-    - each reviewer in reviewers
-        if (reviewer.review.comment)
-            .review
-                p.review.reviewer= reviewer.review.reviewerName
-                textarea.review.comment(readonly, class=reviewer.review.reviewerIdentity)= '内容 ' + reviewer.review.comment

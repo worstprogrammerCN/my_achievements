@@ -1,18 +1,14 @@
 doctype html
 - var assistantRouterUrl = '/assistant';
-- var identityRouterUrl = '/assistant';
-
 - var userRouterUrl = '/user';
 html
   head
     title= title
-    include includes/cdn
     link(rel='stylesheet', href='/stylesheets/style.css')
-    script(src = '/javascripts/style.js')
   body
     #sidebar
       a(href=assistantRouterUrl + '/index')= '主页'
       a(href=assistantRouterUrl + '/profile')= '个人设置'
-      form.logout(action=userRouterUrl + '/logout', method='POST')
-          a.logout= '登出'
+      form(action=userRouterUrl + '/logout', method='POST')
+          input(type='submit' value='登出')
     block content

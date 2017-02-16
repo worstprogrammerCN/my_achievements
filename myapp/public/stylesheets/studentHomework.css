@@ -1,26 +1,16 @@
-.homeworkName{
-    color: orangered;
-    font-weight: bold;
-    font-size: 50px;
-    text-align: center;
+#trigger-upload {
+    color: white;
+    background-color: #00ABC7;
+    font-size: 14px;
+    padding: 7px 20px;
+    background-image: none;
 }
-
-.resultScore{
-    font-weight: bold;
-    text-align: center;
+#fine-uploader-manual-trigger .qq-upload-button {
+    margin-right: 15px;
 }
-
-#uploaders{
+#fine-uploader-manual-trigger .buttons {
+    width: 36%;
+}
+#fine-uploader-manual-trigger .qq-uploader .qq-total-progress-bar-container {
     width: 60%;
-    margin: 0 auto;
 }
-
-#code-uploader-manual-trigger, #image-uploader-trigger{
-    display: inline-block;
-    width: 50%;
-}
-
-#uploaders > div .qq-uploader{
-    width: 100%;
-}
-

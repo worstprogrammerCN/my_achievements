@@ -1,25 +1,15 @@
 extends teacherSidebar
 
 block content
-  #panel
-    #addWebClass 
-      h2= '增加班级'
-      input(name = 'grade' placeholder = 'webClass grade')
-      input(name = 'number' placeholder = 'webClass number')
-      input.submitButton.btn.btn-primary(type = 'button' value = '增加班级')
-    #divideGroup 
-      h2= '分配组员'
-      input(name = 'grade' placeholder = 'grade')
-      input(name = 'number' placeholder = 'number')
-      input(name = 'maxNumber' placeholder = '每组最多人数')
-      input.submitButton.btn.btn-primary(type = 'button' value = '开始分组')
-    #makeHomework 
-      h2= '制定作业'
+  
+  div#makeHomework
+    form()
       input(name = 'name', placeholder = '名字')
-      textarea(name = 'description', placeholder = '描述')
+      input(name = 'description', placeholder = '描述')
       input(name = 'link', placeholder = '链接')
       input(name = 'startTime', placeholder = '开始时间')
       input(name = 'endTime', placeholder = '结束时间')
+<<<<<<< HEAD
       input#makeHomeworkSubmit.btn.btn-primary(type = 'button', value = '提交')
     #distributeReview 
       h2= '分配评论'
@@ -29,4 +19,27 @@ block content
       input.submitButton.btn.btn-primary(type = 'button' value = '开始分配')
   include includes/homework
   link(href = '/stylesheets/panel.css', rel = 'stylesheet')
+=======
+      input#makeHomeworkSubmit(type = 'button', value = '制定作业')
+  div#homeworks
+    ul
+      - for(var index in homeworks)
+        li
+          p= '作业名 ' + homeworks[index].name
+          p= '作业描述 ' + homeworks[index].description
+  div#publishHomework
+    form
+      input#missionName(placeholder = '作业名')
+      input#missionStartTime(placeholder = '开始时间')
+      input#missionDeadline(placeholder = '结束时间')
+      
+      p= '教学班级'
+      ul#webClasses
+        - for(var index in webClasses)
+          li(id = webClasses[index].grade + '-' + webClasses[index].number)
+            p= webClasses[index].grade + '级' + webClasses[index].number + '班'
+            input(type='checkbox')
+      input#publishHomeworkSubmit(type = 'button', value = '提交')
+  script(src = 'http://cdn.bootcss.com/jquery/3.1.1/jquery.min.js')
+>>>>>>> c4bbf5006d05c2d568ef4be17a13670c16d10f19
   script(src = '/javascripts/teacherIndex.js')
