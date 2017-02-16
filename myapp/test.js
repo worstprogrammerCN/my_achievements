@@ -4,15 +4,9 @@ const saltRounds = 10;
 var dbUrl = 'mongodb://localhost:27017/ma';
 var debug = require('debug')('test');
 var moment = require('moment');
-MongoClient.connect(dbUrl).then((db) => {
-  users = db.collection('user');
-  users.findOne({name : '黄忠'}).then((user) => {
-    return users.findOne({name : '荆轲'});
-  }).then((re) => {
-    console.log(re);
-    db.close;
-  })
-})
+// MongoClient.connect(dbUrl).then((db) => {
+  
+// })
 
 // var http = require('http'),
 //     inspect = require('util').inspect;

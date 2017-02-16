@@ -15,12 +15,19 @@ router.use(function(req, res, next){
   next();
 });
 
+router.all('/homework', function(req, res, next){
+  debug('in router.all(/homework)');
+  next();
+})
+
 router.get('/index', function(req, res, next){
   req.student.getHomeworks().then((_homeworks) => {
     let homeworks = _homeworks.map((homework) => new Homework(homework));
+    debug(homeworks);
     res.render('studentIndex', {homeworks : homeworks});
   });
 });
+
 
 router.get('/profile', function(req, res, next){
   var studentWithoutPassword = Student.getUserWithoutPassword(req.student);
@@ -34,35 +41,24 @@ router.get('/profile', function(req, res, next){
 
 router.use('/homework/:homeworkName', function(req, res, next){
   let ifMissionExist = req.student.getMission(req.params.homeworkName);
-  let getHomework = (homeworkName) => {
-    return Student.homeworkCollection
-            .findOne({'name' : homeworkName});
-  };
   ifMissionExist.then((mission) => {
     if (!mission){
-      res.redirect('/student/index');
-      return null;
-    }
-    req.mission = mission;
-    return getHomework(req.params.homeworkName);
-  }).then((homework) => {
-    if (!homework)
-      return;
-    req.homework = new Homework(homework);
-    if (req.homework.status == 'unstarted'){
       return res.redirect('/student/index');
     }
+    req.mission = mission;
+    debug("mission is ", req.mission);
     next();
   })
 })
 
 router.get('/homework/:homeworkName', function(req, res, next){
+  debug('in router :homeworkName');
   let homeworkName = req.params.homeworkName;
   let userId = req.user.id;
+  debug(homeworkName);
   let getReviewerReview = function (reviewerIds){
     let reviews = reviewerIds.map((reviewerId) => {
-      return Student.reviewCollection.findOne({homeworkName : homeworkName,
-                                               reviewerId : reviewerId});
+      return Student.reviewCollection.findOne({reviewerId : reviewerId});
     });
     return Promise.all(reviews); 
   }
@@ -80,11 +76,11 @@ router.get('/homework/:homeworkName', function(req, res, next){
       missions = missions.filter((mission) => {
         return mission.code && mission.image;
       });
+      debug(missions);
       let getReviews = [];
       for(let j = 0; j < missions.length; j++){
         let revieweeId = missions[j].recipient
         let getRevieweeReview = Student.reviewCollection.findOne({
-          homeworkName : homeworkName,
           revieweeId : revieweeId,
           reviewerId : userId
         });
@@ -116,33 +112,12 @@ router.get('/homework/:homeworkName', function(req, res, next){
                       return {review : reviewer};
                     })
                     res.render('studentHomework'
-                        , {homeworkName : homeworkName,
-                           reviewees : reviewees,
-                           reviewers : reviewers,
-                           homework : req.homework,
-                           mission : req.mission});
+                        , {homeworkName : homeworkName
+                        , reviewees : reviewees
+                        , reviewers : reviewers});
                   });
+  
 });
-
-//当作业不处于started状态时，不可提交，下载，或更改评论
-router.use('/homework/:homeworkName/upload', function(req, res, next){
-  if (!homeworkStatusStarted(req.homework))
-    res.redirect('/student/index');
-  next();
-})
-
-router.use('/homework/:homeworkName/download', function(req, res, next){
-  if (!homeworkStatusStarted(req.homework))
-    res.redirect('/student/index');
-  next();
-})
-
-router.use('/homework/:homeworkName/revise', function(req, res, next){
-  if (!homeworkStatusStarted(req.homework))
-    res.redirect('/student/index');
-  next();
-})
-//---------------------------------------------
 
 router.post('/homework/:homeworkName/upload', function(req, res, next){
   var homeworkName = req.params.homeworkName;
@@ -276,10 +251,6 @@ function falseResponse(res){
 
 function successResponse(res){
   return res.end(JSON.stringify({success : true}));
-}
-
-function homeworkStatusStarted(homework){
-  return homework.status == 'started';
 }
 
 

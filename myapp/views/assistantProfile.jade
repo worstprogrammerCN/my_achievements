@@ -1,19 +1,23 @@
 extends assistantSidebar
 
 block content
-    link(rel = 'stylesheet', href = '/stylesheets/information.css')
-    .information-panel
-        .information-head= '个人信息'
-        .information-body
-            ul
-                li= '姓名 ' + user.name
-                li= '帐号 ' + user.id
-                li= '邮箱 ' + user.email
-                li= `${user.webClass.grade}级${user.webClass.number}班`
-                li= '权限 ' + user.identity
-    .information-panel
-        .information-head= '助教小组'
-        .information-body
-         ul
-            - for (var teammateIndex in groupMates)
-              li= groupMates[teammateIndex].name
+    if user
+        h1= 'hello! ' + user.name
+    else
+        h1= 'no user'
+    div#profile
+        ul
+            li= '姓名 ' + user.name
+            li= '学号 ' + user.id
+            li= '邮箱 ' + user.email
+            li= `${user.webClass.grade}级${user.webClass.number}班`
+            li= '权限 ' + user.identity
+    - if (groupMates)
+      div#groupmates
+          h1= '助教小组'
+          ul
+              - for (var teammateIndex in groupMates)
+                p= groupMates[teammateIndex].name
+    - else
+      h1= 'no group'
+

@@ -7,13 +7,6 @@ body {
   padding: 0px;
 }
 
-
-li{
-  list-style-type: none;
-}
-
-
-/* sidebar */
 #sidebar{
   position: relative;
   top: 0px;
@@ -47,10 +40,38 @@ li{
   width: 30%;
 }
 
-.homeworkName{
-  font-size: 50px;
-  font-weight: bold;
-  text-align: center;
-  color: red;
+
+#webClasses{
+  width: 400px;
+  border: 1px solid black;
 }
 
+li{
+  list-style-type: none;
+}
+
+/*webClasses*/
+
+.webClassTitle{
+  cursor: pointer;
+  width: 100px;
+  background-color: rgb(248, 248, 248);
+  color: rgb(102, 102, 102);
+}
+
+.webClassTitle:hover{
+  color: rgb(50, 50, 50);
+}
+
+.webClassTitle.clicked{
+  font-weight: 600;
+  color: black;
+  border-bottom: 3px deepskyblue solid;
+}
+
+ul.reviewees{
+  margin: 0px;
+  padding: 0px;
+  border-left: 8px dimgrey solid;
+  display: none;
+}

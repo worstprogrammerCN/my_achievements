@@ -2,9 +2,28 @@ extends assistantSideBar
 
 block content
     .homeworkName= homeworkName
-    include includes/reviewees
+
     - var homeworkRouterUrl = '/homework'
-    
+    p= 'reviewees length : ' + reviewees.length
+    #reviewees
+        - if (reviewees.lenth > 0)
+        - each reviewee in reviewees
+            .review
+                p= '已提交作业的同学 '
+                .revieweeName= reviewee.review.revieweeName
+                p= '学号 '
+                .revieweeId= reviewee.review.revieweeId
+                a.code(href=`${assistantRouterUrl}/homework/${homeworkName}/download/code?revieweeId=${reviewee.review.revieweeId}`)= '下载代码'
+                a.image(href=`${assistantRouterUrl}/homework/${homeworkName}/download/image?revieweeId=${reviewee.review.revieweeId}`)= '下载预览图'
+                p= '你的评论 '
+                - if (reviewee.review.comment)
+                    .comment= reviewee.review.comment
+                - else
+                    .comment= '暂无评论'
+                input(type = 'text').reviseComment
+                input(type = 'button', value = '提交评论').uploadReview
+        - else
+            p= '暂无同学提交作业'
   
     script(src = '/javascripts/assistantHomework.js')
 
