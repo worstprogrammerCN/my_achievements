@@ -4,15 +4,11 @@ const saltRounds = 10;
 var dbUrl = 'mongodb://localhost:27017/ma';
 var debug = require('debug')('test');
 var moment = require('moment');
-MongoClient.connect(dbUrl).then((db) => {
-  users = db.collection('user');
-  users.findOne({name : '黄忠'}).then((user) => {
-    return users.findOne({name : '荆轲'});
-  }).then((re) => {
-    console.log(re);
-    db.close;
-  })
-})
+// MongoClient.connect(dbUrl).then((db) => {
+  
+// });
+
+console.log(Math.ceil(2/1));
 
 // var http = require('http'),
 //     inspect = require('util').inspect;
@@ -78,11 +74,6 @@ MongoClient.connect(dbUrl).then((db) => {
 // // File [filefield] Finished 
 // // Done parsing form! 
 
-
-var a = ['a', 'b', 'c'];
-var b = a;
-a.sort(() => 0.5 - Math.random());
-console.log(b, a);
 
 function encryptPassword(plainPassword){ // return a promise with hashed password
   return bcrypt.hash(plainPassword, saltRounds);

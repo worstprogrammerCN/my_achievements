@@ -4,6 +4,9 @@ $(function(){
     let addwebClassUrl = administorRouterUrl + '/addWebClass';
     let divideGroupUrl = administorRouterUrl + '/divideGroup';
     let distributeSettingUrl = administorRouterUrl + '/distributeReview';
+    function logout(){
+        $('form.logout').submit();
+    }
     function addUser(){
         let $form = $('#addUser');
         var user = {
@@ -107,7 +110,7 @@ $(function(){
             alert('connect fail')
         })   
     }
-
+    $('form.logout a').click(logout);
     $('#addUser .submitButton').click(addUser);
     $('#addWebClass .submitButton').click(addWebClass);
     $('#divideGroup .submitButton').click(divideGroup);

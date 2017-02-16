@@ -24,4 +24,5 @@
         p.detail
           if (homework.status != 'unstarted')
             a.homework.detail.btn.btn-info(href = `${identityRouterUrl}/homework/${homework.name}`)= '查看详情'
-          a.homework.detail.btn.btn-info(href = `${identityRouterUrl}/homework/${homework.name}`)= '查看详情'
+          else
+            button.topcoat-button--large(disabled)= '尚未开放'

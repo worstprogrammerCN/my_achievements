@@ -2,37 +2,50 @@
 - var administorRouterUrl = '/administor'
 head
     link(rel = 'stylesheet' href = '/stylesheets/administorIndex.css')
+    link(rel = 'stylesheet' href = '/stylesheets/topcoat-light.css')
+    link(rel = 'stylesheet' href = '/stylesheets/style.css')
 
 body
+    include includes/cdn
+    #sidebar
+        form.logout(action= userRouterUrl + '/logout', method='POST')
+            a.logout= '登出'
     h1= 'hello! ' + user.name
-    form(action= userRouterUrl + '/logout', method='POST')
-        input(type='submit' value='登出')
-    form#addUser
-        input(name = 'id' placeholder = 'id')
-        input(name = 'name' placeholder = 'name')
-        input(name = 'password', type = 'password', placeholder = 'password')
-        input(name = 'email', placeholder = 'email,可为空')
-        input(name = 'grade' placeholder = 'webClass grade')
-        input(name = 'number' placeholder = 'webClass number')
-        input(name = 'identity' placeholder = 'identity')
-        input.submitButton(type = 'button' value = '增加用户')
-    button#deleteUser 删除用户
-    form#addWebClass 增加班级
-        input(name = 'grade' placeholder = 'webClass grade')
-        input(name = 'number' placeholder = 'webClass number')
-        input.submitButton(type = 'button' value = '增加班级')
-    form#divideGroup 分配组员
-        input(name = 'grade' placeholder = 'grade')
-        input(name = 'number' placeholder = 'number')
-        input(name = 'maxNumber' placeholder = '每组最多人数')
-        input.submitButton(type = 'button' value = '自动分组')
-    form#distributeReview 分配评论
-        input(name = 'grade' placeholder = 'webClass grade')
-        input(name = 'number' placeholder = 'webClass number')
-        input(name = 'homeworkName' placeholder = 'homework name')
-        input.submitButton(type = 'button' value = '分配评论')
-    button#deleteClass 删除班级
-    button#assignJob 赋予用户权限
+    #panel
+        #addUser
+            h2= '增加用户'
+            input.topcoat-text-input(name = 'id' placeholder = 'id')
+            input.topcoat-text-input(name = 'name' placeholder = 'name')
+            input.topcoat-text-input(name = 'password', type = 'password', placeholder = 'password')
+            input.topcoat-text-input(name = 'email', placeholder = 'email,可为空')
+            input.topcoat-text-input(name = 'grade' placeholder = 'webClass grade')
+            input.topcoat-text-input(name = 'number' placeholder = 'webClass number')
+            input.topcoat-text-input(name = 'identity' placeholder = 'identity')
+            input.submitButton.topcoat-button--cta(type = 'button' value = '增加用户')
+        #deleteUser 
+            h2= '删除用户'
+        #addWebClass
+            h2= '增加班级'
+            input.topcoat-text-input(name = 'grade' placeholder = 'webClass grade')
+            input.topcoat-text-input(name = 'number' placeholder = 'webClass number')
+            input.submitButton.topcoat-button--cta(type = 'button' value = '增加班级')
+        #divideGroup
+            h2= '分配组员'
+            input.topcoat-text-input(name = 'grade' placeholder = 'grade')
+            input.topcoat-text-input(name = 'number' placeholder = 'number')
+            input.topcoat-text-input(name = 'maxNumber' placeholder = '每组最多人数')
+            input.submitButton.topcoat-button--cta(type = 'button' value = '自动分组')
+        #distributeReview
+            h2= '分配评论'
+            input.topcoat-text-input(name = 'grade' placeholder = 'webClass grade')
+            input.topcoat-text-input(name = 'number' placeholder = 'webClass number')
+            input.topcoat-text-input(name = 'homeworkName' placeholder = 'homework name')
+            input.submitButton.topcoat-button--cta(type = 'button' value = '分配评论')
+        #deleteClass 
+            h2= '删除班级'
+        #assignJob 
+            h2= '赋予用户权限'
     
+    link(href = '/stylesheets/panel.css', rel = 'stylesheet')
     script(src = '/javascripts/userValidator.js')
     script(src = '/javascripts/administorIndex.js')

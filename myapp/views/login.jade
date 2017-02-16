@@ -1,5 +1,6 @@
 
 head
+  link(rel = 'stylesheet' href = '/stylesheets/topcoat-light.css')
   link(rel='stylesheet', href='/stylesheets/login.css')
 body
   h1= 'My Achievements'
@@ -13,8 +14,8 @@ body
       h4= 'Enter your id and password to sign in!'
 
     .footer
-        input.form-control(name = 'id', placeholder="account id")
-        input.form-control(name = 'password', type='password', placeholder="password")
-        button(type='button')#login= '登录！'
+        input.topcoat-text-input(name = 'id', placeholder="account id")
+        input.topcoat-text-input(name = 'password', type='password', placeholder="password")
+        button.topcoat-button--large--cta(type='button')#login= '登录！'
   script(src = 'http://cdn.bootcss.com/jquery/3.1.1/jquery.min.js')
   script(src = '/javascripts/login.js')

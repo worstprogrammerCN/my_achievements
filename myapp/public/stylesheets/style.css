@@ -12,6 +12,10 @@ li{
   list-style-type: none;
 }
 
+input[type='submit'], input[type='button']{
+  cursor: pointer;
+}
+
 
 /* sidebar */
 #sidebar{
@@ -19,7 +23,7 @@ li{
   top: 0px;
   background-color: rgb(30, 35, 39);
   width: 100%;
-  height: 20%;
+  height: 80px;
   padding-top: 20px;
   padding-bottom: 10px;
 }
