@@ -1,18 +1,5 @@
 extends studentSidebar
 
 block content
-    - if (homeworks)
-      ul
-      - each homework in homeworks
-        li
-          p= '作业名 ' + homework.name
-          p= '作业状态 ' + homework.status
-          p= '开始日期 ' + homework.startTime
-          p= '截至日期 ' + homework.endTime
-          p= '作业描述 ' + homework.description
-          a(href = homework.link)= '作业链接'
-          a(href = studentRouterUrl + '/homework/' + homework.name) 作业详情
-    - else
-      p= 'error! no missions'
-
+    include includes/homework
     

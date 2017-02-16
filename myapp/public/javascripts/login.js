@@ -2,7 +2,13 @@ $(function(){
     userRouterUrl = '/user'
 
     function checkLogin(){
-        $.post(userRouterUrl + '/login', $( "#loginPanel" ).serialize())
+        console.log('a');
+        var $form = $('.footer');
+        var user = {
+            id : $form.find('input[name="id"]').val(),
+            password : $form.find('input[name="password"]').val()
+        }
+        $.post(userRouterUrl + '/login', user)
         .done((result) => {
             result = JSON.parse(result);
             if (result.loginSuccess){
@@ -19,4 +25,5 @@ $(function(){
     }
 
     $('#login').click(checkLogin);
+    
 })

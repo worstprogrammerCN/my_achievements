@@ -1,12 +1,11 @@
 body {
-  padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
-a {
-  color: #00B7FF;
+*{
+  margin: 0px;
+  padding: 0px;
 }
-<<<<<<< HEAD
 
 
 li{
@@ -59,5 +58,3 @@ input[type='submit'], input[type='button']{
   color: red;
 }
 
-=======
->>>>>>> c4bbf5006d05c2d568ef4be17a13670c16d10f19

@@ -1,4 +1,4 @@
-extends studentSidebar
+extends assistantSidebar
 
 block content
     link(rel = 'stylesheet', href = '/stylesheets/information.css')
@@ -7,15 +7,13 @@ block content
         .information-body
             ul
                 li= '姓名 ' + user.name
-                li= '学号 ' + user.id
+                li= '帐号 ' + user.id
                 li= '邮箱 ' + user.email
                 li= `${user.webClass.grade}级${user.webClass.number}班`
-                li= '小组 ' + user.group
                 li= '权限 ' + user.identity
     .information-panel
-        .information-head= '组员们'
+        .information-head= '助教小组'
         .information-body
          ul
             - for (var teammateIndex in groupMates)
               li= groupMates[teammateIndex].name
-

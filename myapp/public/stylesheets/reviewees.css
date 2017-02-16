@@ -1,0 +1,61 @@
+#reviewees {
+    width: 80%;
+    margin-top: 1%;
+    margin-left:auto;
+    margin-right: auto;
+}
+
+#reviewees .review{
+    height: 150px;
+}
+
+#reviewees .review > *{
+    vertical-align: top;
+}
+
+#reviewees .review img.image{
+    height: 85%;
+    width: 10%;
+}
+
+#reviewees .review p{
+    background-color: rgb(106, 90, 140);
+    height: 20px;
+    margin: 0px;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+}
+
+#reviewees .review textarea{
+    resize: none;
+}
+
+#reviewees .review div{
+    display: inline-block;
+}
+
+#reviewees .review .download{
+    height: 85%;
+    width: 10%;
+}
+
+#reviewees .review .download > a{
+    display: block;
+    height: 50%;
+}
+
+#reviewees .comment{
+    height: 85%;
+    text-align: center;
+    padding-top: 20px;
+    font-size: 30px;
+    width: 70%;
+}
+
+#reviewees .review .uploadReview{
+    height: 85%;
+    width: 10%;
+    cursor: pointer;
+}
+
