@@ -4,10 +4,14 @@ $(function(){
     let addwebClassUrl = administorRouterUrl + '/addWebClass';
     let divideGroupUrl = administorRouterUrl + '/divideGroup';
     let distributeSettingUrl = administorRouterUrl + '/distributeReview';
+<<<<<<< HEAD
     function logout(){
         $('form.logout').submit();
     }
     function addUser(){
+=======
+    function checkUser(){
+>>>>>>> c4bbf5006d05c2d568ef4be17a13670c16d10f19
         let $form = $('#addUser');
         var user = {
             id : $form.find('input[name = "id"]').val(),
@@ -40,7 +44,7 @@ $(function(){
             })
         }      
     }
-    function addWebClass(){
+    function checkWebClass(){
         let $form = $('#addWebClass');
         let webClass = {
             grade : parseInt($form.find('input[name = "grade"]').val()),
@@ -86,7 +90,7 @@ $(function(){
         })   
     }
 
-    function distributeReview(){
+    function checkDistributeSetting(){
         $form = $('#distributeReview');
         var distributeSetting = {
             webClass : {
@@ -110,9 +114,15 @@ $(function(){
             alert('connect fail')
         })   
     }
+<<<<<<< HEAD
     $('form.logout a').click(logout);
     $('#addUser .submitButton').click(addUser);
     $('#addWebClass .submitButton').click(addWebClass);
+=======
+
+    $('#addUser .submitButton').click(checkUser);
+    $('#addWebClass .submitButton').click(checkWebClass);
+>>>>>>> c4bbf5006d05c2d568ef4be17a13670c16d10f19
     $('#divideGroup .submitButton').click(divideGroup);
-    $('#distributeReview .submitButton').click(distributeReview);
+    $('#distributeReview .submitButton').click(checkDistributeSetting);
 })

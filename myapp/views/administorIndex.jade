@@ -11,6 +11,7 @@ body
         form.logout(action= userRouterUrl + '/logout', method='POST')
             a.logout= '登出'
     h1= 'hello! ' + user.name
+<<<<<<< HEAD
     #panel
         #addUser
             h2= '增加用户'
@@ -47,5 +48,36 @@ body
             h2= '赋予用户权限'
     
     link(href = '/stylesheets/panel.css', rel = 'stylesheet')
+=======
+    form(action= userRouterUrl + '/logout', method='POST')
+        input(type='submit' value='登出')
+    form#addUser
+        input(name = 'id' placeholder = 'id')
+        input(name = 'name' placeholder = 'name')
+        input(name = 'password', type = 'password', placeholder = 'password')
+        input(name = 'email', placeholder = 'email,可为空')
+        input(name = 'grade' placeholder = 'webClass grade')
+        input(name = 'number' placeholder = 'webClass number')
+        input(name = 'identity' placeholder = 'identity')
+        input.submitButton(type = 'button' value = '增加用户')
+    button#deleteUser 删除用户
+    form#divideGroup
+        input(name = 'grade' placeholder = 'grade')
+        input(name = 'number' placeholder = 'number')
+        input(name = 'maxNumber' placeholder = '每组最多人数')
+        input.submitButton(type = 'button' value = '自动分组')
+    form#addWebClass 增加班级
+        input(name = 'grade' placeholder = 'webClass grade')
+        input(name = 'number' placeholder = 'webClass number')
+        input.submitButton(type = 'button' value = '增加班级')
+    form#distributeReview 分配评论
+        input(name = 'grade' placeholder = 'webClass grade')
+        input(name = 'number' placeholder = 'webClass number')
+        input(name = 'homeworkName' placeholder = 'homework name')
+        input.submitButton(type = 'button' value = '分配评论')
+    button#deleteClass 删除班级
+    button#assignJob 赋予用户权限
+    include includes/cdn
+>>>>>>> c4bbf5006d05c2d568ef4be17a13670c16d10f19
     script(src = '/javascripts/userValidator.js')
     script(src = '/javascripts/administorIndex.js')
