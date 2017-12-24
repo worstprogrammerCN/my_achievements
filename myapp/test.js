@@ -5,6 +5,7 @@ var dbUrl = 'mongodb://localhost:27017/ma';
 var debug = require('debug')('test');
 var moment = require('moment');
 <<<<<<< HEAD
+<<<<<<< HEAD
 // MongoClient.connect(dbUrl).then((db) => {
   
 // });
@@ -23,6 +24,17 @@ MongoClient.connect(dbUrl).then((db) => {
 
 
 
+=======
+MongoClient.connect(dbUrl).then((db) => {
+  users = db.collection('user');
+  users.findOne({name : '黄忠'}).then((user) => {
+    return users.findOne({name : '荆轲'});
+  }).then((re) => {
+    console.log(re);
+    db.close;
+  })
+})
+>>>>>>> parent of 7c0176b... 修复database 修复分组bug 进一步美化
 
 // var http = require('http'),
 //     inspect = require('util').inspect;
@@ -90,6 +102,7 @@ MongoClient.connect(dbUrl).then((db) => {
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 function foo1(){
   function foo2(){
@@ -100,6 +113,13 @@ function foo1(){
 console.log(foo2);
 
 >>>>>>> c4bbf5006d05c2d568ef4be17a13670c16d10f19
+=======
+var a = ['a', 'b', 'c'];
+var b = a;
+a.sort(() => 0.5 - Math.random());
+console.log(b, a);
+
+>>>>>>> parent of 7c0176b... 修复database 修复分组bug 进一步美化
 function encryptPassword(plainPassword){ // return a promise with hashed password
   return bcrypt.hash(plainPassword, saltRounds);
 }

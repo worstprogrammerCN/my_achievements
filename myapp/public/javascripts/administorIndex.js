@@ -5,9 +5,12 @@ $(function(){
     let divideGroupUrl = administorRouterUrl + '/divideGroup';
     let distributeSettingUrl = administorRouterUrl + '/distributeReview';
 <<<<<<< HEAD
+<<<<<<< HEAD
     function logout(){
         $('form.logout').submit();
     }
+=======
+>>>>>>> parent of 7c0176b... 修复database 修复分组bug 进一步美化
     function addUser(){
 =======
     function checkUser(){
@@ -115,7 +118,11 @@ $(function(){
         })   
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
     $('form.logout a').click(logout);
+=======
+
+>>>>>>> parent of 7c0176b... 修复database 修复分组bug 进一步美化
     $('#addUser .submitButton').click(addUser);
     $('#addWebClass .submitButton').click(addWebClass);
 =======

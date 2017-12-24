@@ -102,7 +102,7 @@ router.post('/divideGroup', function(req, res, next){
   };
 
   let updateStudentGroupProperty = (student, group) => {
-    debug(student.id, group);
+    debug(student, group);
     return userCollection
             .updateOne({id : student.id},
                     {$set : {group : group}});
@@ -117,12 +117,10 @@ router.post('/divideGroup', function(req, res, next){
   .then(() => {
     return userCollection.find({
         'webClass.grade' : divideSetting.webClass.grade,
-        'webClass.number' : divideSetting.webClass.number,
-        'identity' : 'student'
+        'webClass.number' : divideSetting.webClass.number
     }).toArray()
   })
   .then((students) => {
-    debug(students);
     _students = students;
     _groupCount = groupCount = Math.ceil(students.length / divideSetting.maxNumber);
     students.sort(() => 0.5 - Math.random());
@@ -135,7 +133,7 @@ router.post('/divideGroup', function(req, res, next){
     let groupCount = _groupCount;
     let promises = [];
     students.forEach((student, index) => {
-        let groupNumber = Math.floor(index / divideSetting.maxNumber) + 1;
+        let groupNumber = parseInt(index / groupCount) + 1;
         promises.push(addStudentToGroup(student, groupNumber),
                     updateStudentGroupProperty(student, groupNumber));
     });

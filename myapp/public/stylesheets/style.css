@@ -13,10 +13,6 @@ li{
   list-style-type: none;
 }
 
-input[type='submit'], input[type='button']{
-  cursor: pointer;
-}
-
 
 /* sidebar */
 #sidebar{
@@ -24,7 +20,7 @@ input[type='submit'], input[type='button']{
   top: 0px;
   background-color: rgb(30, 35, 39);
   width: 100%;
-  height: 80px;
+  height: 20%;
   padding-top: 20px;
   padding-bottom: 10px;
 }
