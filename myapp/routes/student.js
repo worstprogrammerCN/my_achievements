@@ -131,20 +131,20 @@ router.post('/homework/:homeworkName/upload', function(req, res, next){
       console.log('File [' + fieldname + ']: filename: ' + uploadFileName + ', encoding: ' + encoding + ', mimetype: ' + mimetype);
       let studentDir = path.join(__dirname, '../uploads', homeworkName);
       let homeworkDir = path.join(studentDir, studentId);
-      let uploadFileType = uploadFileName.split('.').pop();
+      let [ , uploadFileType] = uploadFileName.split('.')
       let savedFileName = `${req.user.id}_${req.user.name}_${req.user.group}.${uploadFileType}`;
       let saveTo = path.join(homeworkDir, savedFileName);
       if (!fs.existsSync(studentDir))
         fs.mkdirSync(studentDir);
       if (!fs.existsSync(homeworkDir))
         fs.mkdirSync(homeworkDir);
-      debug(!isPicture(uploadFileType) && !isZip(uploadFileType));
+      debug(uploadFileType);
       if (!isPicture(uploadFileType) && !isZip(uploadFileType))
         return res.end(JSON.stringify({ok : false, error : 'wrong type'}));
       file.pipe(fs.createWriteStream(saveTo, {flags : 'w+'}));
       file.on('data', function(data) {
         debug('data recieved', data);
-        debug('File [' + fieldname + '] got ' + data.length + ' bytes');
+        console.log('File [' + fieldname + '] got ' + data.length + ' bytes');
       });
       file.on('end', function() {
         debug(saveTo);
@@ -157,7 +157,7 @@ router.post('/homework/:homeworkName/upload', function(req, res, next){
         updatePromise.then(() => {
           res.end(JSON.stringify({success : true}));
         }).catch((error) => {
-          debug(error);
+          console.log(error);
           res.end(JSON.stringify({success : false}));
         })
       });
