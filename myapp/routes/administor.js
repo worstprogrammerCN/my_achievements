@@ -88,7 +88,6 @@ router.post('/divideGroup', function(req, res, next){
           'grade' : student.webClass.grade,
           'number' : student.webClass.number
         },
-<<<<<<< HEAD
         'number' : index
       }}, {upsert : true, w : 1});
   };
@@ -137,18 +136,6 @@ router.post('/divideGroup', function(req, res, next){
         promises.push(addStudentToGroup(student, groupNumber),
                     updateStudentGroupProperty(student, groupNumber));
     });
-=======
-        'number' : group
-      }, $$addToSet : {'members' : student.id}}, {upsert : true, w : 1});
-      let updateStudentGroupPromise = userCollection
-                                     .updateOne({id : student.id}
-                                              , {$set : {group : group}});
-      debug(addStudentToGroupPromise,
-      updateStudentGroupPromise);
-      promises.push(addStudentToGroupPromise,
-                    updateStudentGroupPromise);
-    }
->>>>>>> c4bbf5006d05c2d568ef4be17a13670c16d10f19
     return Promise.all(promises);
   }).then((r) => {
     res.end(JSON.stringify({ok : true}));
